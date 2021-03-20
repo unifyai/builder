@@ -1,0 +1,16 @@
+Network spec
+============
+
+.. automodule:: ivy_builder.specs.network_spec
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Network spec
+
+   network_spec/NetworkSpec.rst
+

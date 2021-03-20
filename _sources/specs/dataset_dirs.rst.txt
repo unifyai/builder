@@ -1,0 +1,16 @@
+Dataset dirs
+============
+
+.. automodule:: ivy_builder.specs.dataset_dirs
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Dataset dirs
+
+   dataset_dirs/DatasetDirs.rst
+

@@ -1,0 +1,16 @@
+Network
+=======
+
+.. automodule:: ivy_builder.empty.network
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Network
+
+   network/EmptyNetwork.rst
+

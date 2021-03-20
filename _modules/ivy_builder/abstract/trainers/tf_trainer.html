@@ -1,0 +1,551 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ivy_builder.abstract.trainers.tf_trainer &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../why_ivy.html">Why Ivy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../using_ivy.html">Using Ivy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../abstract/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../empty/network.html">Network</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../specs/trainer_spec.html">Trainer spec</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../ivy"">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../mech"">Ivy Mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../vision"">Ivy Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../robot"">Ivy Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../memory"">Ivy Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../gym"">Ivy Gym</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ivy_builder.abstract.trainers.tf_trainer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ivy_builder.abstract.trainers.tf_trainer</h1><div class="highlight"><pre>
+<span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.profiler.experimental</span> <span class="k">import</span> <span class="n">ProfilerOptions</span>
+
+<span class="c1"># local</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs.trainer_spec</span> <span class="k">import</span> <span class="n">TrainerSpec</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.data_loader</span> <span class="k">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.network</span> <span class="k">import</span> <span class="n">Network</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.trainer</span> <span class="k">import</span> <span class="n">Trainer</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TFTrainer"><a class="viewcode-back" href="../../../../abstract/trainers/tf_trainer/TFTrainer.html#ivy_builder.abstract.trainers.tf_trainer.TFTrainer">[docs]</a><span class="k">class</span> <span class="nc">TFTrainer</span><span class="p">(</span><span class="n">Trainer</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TFTrainer.__init__"><a class="viewcode-back" href="../../../../abstract/trainers/tf_trainer/TFTrainer.html#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">TrainerSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+
+        <span class="c1"># trainer variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;global_step&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">initial_learning_rate</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;moving_average_loss&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ema</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">ExponentialMovingAverage</span><span class="p">(</span><span class="n">decay</span><span class="o">=</span><span class="mf">0.9999</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># reset graph</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
+
+        <span class="c1"># set seed</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="c1"># uninitialized variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_dir_train</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vis_dir_train</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary_writers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_dirs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="c1"># profiling</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_trace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_trace</span></div>
+
+    <span class="c1"># Abstract #</span>
+    <span class="c1"># ---------#</span>
+
+    <span class="c1"># Private Methods #</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tape</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute training cost from input batch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute learning rate, given global step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_write_scalar_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+                                <span class="n">training_writer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">SummaryWriter</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        write scalar summaries to disk, ready for tensorboard viewing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_write_image_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>
+                               <span class="n">training_writer</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">SummaryWriter</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        write image summaries to disk, ready for tensorboard viewing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="c1"># Getters #</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@_optimizer</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Initialization #</span>
+    <span class="c1"># ---------------#</span>
+
+    <span class="k">def</span> <span class="nf">_init_checkpoint_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;chkpts&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">step</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="p">,</span> <span class="n">net</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">CheckpointManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;chkpts&#39;</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span>
+                                                         <span class="n">step_counter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_make_log_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">log_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_dirs</span><span class="p">:</span>
+            <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_log_dirs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_dir_train</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;tnsrbrd&#39;</span><span class="p">,</span> <span class="s1">&#39;scalars&#39;</span><span class="p">,</span> <span class="s1">&#39;training&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vis_dir_train</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;tnsrbrd&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;training&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_dirs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_log_dir_train</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_vis_dir_train</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_make_log_dirs</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_log_summary_writers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">sw_log_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">create_file_writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_log_dir_train</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary_writers</span><span class="p">[</span><span class="s1">&#39;log_train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sw_log_train</span>
+
+    <span class="k">def</span> <span class="nf">_init_vis_summary_writers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">sw_vis_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">create_file_writer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_vis_dir_train</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary_writers</span><span class="p">[</span><span class="s1">&#39;vis_train&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sw_vis_train</span>
+
+    <span class="k">def</span> <span class="nf">_init_summary_writers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_scalars</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_log_summary_writers</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_vis</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_vis_summary_writers</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_init_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_log_dirs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_summary_writers</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_log_scalars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_scalar_summaries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_summary_writers</span><span class="p">[</span><span class="s1">&#39;log_train&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">py_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span><span class="o">.</span><span class="n">save</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">string</span><span class="p">])</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;network checkpoint saved @ step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_initialize_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">starting_iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_checkpoint_manager</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_path</span><span class="p">:</span>
+            <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span><span class="o">.</span><span class="n">latest_checkpoint</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">ld_chkpt</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">checkpoint_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unable to load checkpoint, no checkpoint files found.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">ld_chkpt</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">checkpoint_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">load_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loaded checkpoints from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">load_status</span><span class="o">.</span><span class="n">assert_consumed</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+            <span class="c1"># ToDo: add this assertion back normally once this issue is resolved:</span>
+            <span class="c1"># https://github.com/tensorflow/tensorflow/issues/33150</span>
+            <span class="c1"># load_status.assert_consumed()</span>
+            <span class="n">starting_iteration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;#--------------#</span><span class="se">\n</span><span class="s1"># MODEL LOADED #</span><span class="se">\n</span><span class="s1">#--------------#&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;#-------------#</span><span class="se">\n</span><span class="s1"># MODEL BUILT #</span><span class="se">\n</span><span class="s1">#-------------#&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span>
+        <span class="k">return</span> <span class="n">starting_iteration</span>
+
+    <span class="c1"># Training #</span>
+    <span class="c1"># ---------#</span>
+
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_train_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_output</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">training_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">get_next_training_batch</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">watch_accessed_variables</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">auto_detect_weights</span><span class="p">)</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span><span class="p">(</span><span class="n">training_batch</span><span class="p">,</span> <span class="n">tape</span><span class="p">)</span>
+            <span class="n">cost</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">cost</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ema</span><span class="o">.</span><span class="n">apply</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_train_step</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">with_output</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">training_batch</span><span class="p">,</span> <span class="n">cost</span>
+        <span class="k">return</span> <span class="n">cost</span>
+
+    <span class="k">def</span> <span class="nf">_data_load_and_train_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_mode</span><span class="p">,</span> <span class="n">log_scalars_on_this_it</span><span class="p">,</span> <span class="n">log_viz_on_this_it</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">get_next_training_batch</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_scalars_on_this_it</span> <span class="ow">or</span> <span class="n">log_viz_on_this_it</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_cost</span> <span class="o">=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_train_step</span><span class="p">(</span><span class="n">with_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_total_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_step</span><span class="p">()</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;: cost = &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_cost</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;: smoothed cost = &#39;</span> <span class="o">+</span>
+                         <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">moving_average_loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">repeat_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">starting_iteration</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="n">starting_iteration</span>
+
+        <span class="k">if</span> <span class="n">repeat_run</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">total_iterations</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">total_iterations</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">),</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">min_learning_rate</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">max_learning_rate</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span>
+
+        <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+            <span class="n">vis_freq</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vis_freq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">vis_freq</span>
+
+        <span class="n">local_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">tracing</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">local_counter</span> <span class="o">==</span> <span class="mi">11</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_trace</span><span class="p">:</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;tnsrbrd&#39;</span><span class="p">,</span> <span class="s1">&#39;profile&#39;</span><span class="p">),</span>
+                                               <span class="n">ProfilerOptions</span><span class="p">(</span><span class="n">host_tracer_level</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">python_tracer_level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                                               <span class="n">device_tracer_level</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">tracing</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">log_scalars_on_this_it</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_scalars</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">==</span> <span class="mi">0</span> \
+                                     <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">vis_mode</span>
+            <span class="n">log_viz_on_this_it</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_vis</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="n">vis_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">vis_freq</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="n">tracing</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">Trace</span><span class="p">(</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">step_num</span><span class="o">=</span><span class="n">local_counter</span><span class="p">,</span> <span class="n">_r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data_load_and_train_step</span><span class="p">(</span><span class="n">vis_mode</span><span class="p">,</span> <span class="n">log_scalars_on_this_it</span><span class="p">,</span> <span class="n">log_viz_on_this_it</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data_load_and_train_step</span><span class="p">(</span><span class="n">vis_mode</span><span class="p">,</span> <span class="n">log_scalars_on_this_it</span><span class="p">,</span> <span class="n">log_viz_on_this_it</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">local_counter</span> <span class="o">==</span> <span class="mi">19</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_trace</span><span class="p">:</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+                <span class="n">tracing</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="n">log_scalars_on_this_it</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_scalars</span><span class="p">()</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tensorboard scalar log saved @ step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="n">log_viz_on_this_it</span> <span class="ow">or</span> <span class="n">vis_mode</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_image_summaries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">_summary_writers</span><span class="p">[</span><span class="s1">&#39;vis_train&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tensorboard image log saved @ step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_freq</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">vis_mode</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">assign_add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">local_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">),</span>
+                                                             <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">min_learning_rate</span><span class="p">),</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">max_learning_rate</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+                <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;press enter to visualise another pwc&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="c1"># Public Methods #</span>
+    <span class="c1"># ---------------#</span>
+
+<div class="viewcode-block" id="TFTrainer.save"><a class="viewcode-back" href="../../../../abstract/trainers/tf_trainer/TFTrainer.html#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save the network weights in checkpoint file</span>
+<span class="sd">        :param checkpoint_path: path of the checkpoint file for saving the weights</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFTrainer.restore"><a class="viewcode-back" href="../../../../abstract/trainers/tf_trainer/TFTrainer.html#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        restore the network weights from checkpoint file</span>
+<span class="sd">        :param checkpoint_path: path of the checkpoint file for loading the weights</span>
+<span class="sd">        :param global_step: training step to start at for continued training</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">global_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">global_step</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFTrainer.save_model"><a class="viewcode-back" href="../../../../abstract/trainers/tf_trainer/TFTrainer.html#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saved_model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        saved the model in saved model format, from the specified checkpoint</span>
+<span class="sd">        :param saved_model_path: path to save the new saved model</span>
+<span class="sd">        :param checkpoint_path: path of the network weights in checkpoint files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">checkpoint_path</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_checkpoint_manager</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">)</span>
+        <span class="n">serialized_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">get_serializable_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">test_serializable_model</span><span class="p">(</span><span class="n">serialized_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">)</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">serialized_model</span><span class="p">,</span> <span class="n">saved_model_path</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">saved_model_path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span><span class="o">.</span><span class="n">test_serializable_model</span><span class="p">(</span><span class="n">loaded_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;model was saved, but could not be loaded. Now deleting.&#39;</span><span class="p">)</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">saved_model_path</span><span class="p">)</span></div>
+
+    <span class="c1"># Getters #</span>
+    <span class="c1"># --------#</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">moving_average_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ema</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">learning_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

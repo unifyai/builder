@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ivy_builder.data_loaders.tf_data_loader &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_ivy.html">Why Ivy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../using_ivy.html">Using Ivy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ivy"">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mech"">Ivy Mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../vision"">Ivy Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../robot"">Ivy Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../memory"">Ivy Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gym"">Ivy Gym</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ivy_builder.data_loaders.tf_data_loader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ivy_builder.data_loaders.tf_data_loader</h1><div class="highlight"><pre>
+<span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_io</span> <span class="k">as</span> <span class="nn">tfio</span>
+<span class="kn">from</span> <span class="nn">ivy.core.container</span> <span class="k">import</span> <span class="n">Container</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.data_loader</span> <span class="k">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs</span> <span class="k">import</span> <span class="n">DataLoaderSpec</span>
+
+
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<div class="viewcode-block" id="TFDataLoader"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader">[docs]</a><span class="k">class</span> <span class="nc">TFDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+
+<div class="viewcode-block" id="TFDataLoader.__init__"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader_spec</span><span class="p">:</span> <span class="n">DataLoaderSpec</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TFDataLoader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_loader_spec</span><span class="p">)</span>
+
+        <span class="c1"># prevents QT conflicts with other applications, such as PyRep</span>
+        <span class="kn">import</span> <span class="nn">cv2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cv2</span> <span class="o">=</span> <span class="n">cv2</span>
+
+        <span class="c1"># cpus</span>
+        <span class="k">if</span> <span class="s1">&#39;num_workers&#39;</span> <span class="ow">in</span> <span class="n">data_loader_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span> <span class="o">=</span> <span class="n">data_loader_spec</span><span class="o">.</span><span class="n">num_workers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+
+        <span class="c1"># first frame validity</span>
+        <span class="k">if</span> <span class="s1">&#39;first_frame_validity_fn&#39;</span> <span class="ow">in</span> <span class="n">data_loader_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="o">=</span> <span class="n">data_loader_spec</span><span class="o">.</span><span class="n">first_frame_validity_fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># data loader specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="o">=</span> <span class="n">data_loader_spec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">dataset_dir</span><span class="p">,</span> <span class="s1">&#39;containers&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+
+        <span class="c1"># TF variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">window_size</span>
+        <span class="k">if</span> <span class="s1">&#39;sequence_lengths&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">batch_size</span>
+
+        <span class="c1"># parallelism</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_window_iterations</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+
+        <span class="c1"># train and validation idxs</span>
+        <span class="n">start_idx_train</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">end_idx_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_training_sequences</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">start_idx_valid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_training_sequences</span>
+        <span class="n">end_idx_valid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences_to_use</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># train dataset</span>
+        <span class="n">train_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataset</span><span class="p">(</span><span class="n">start_idx_train</span><span class="p">,</span> <span class="n">end_idx_train</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_training_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span>
+
+        <span class="c1"># validation</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_training_sequences</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences_to_use</span><span class="p">:</span>
+            <span class="n">validation_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataset</span><span class="p">(</span><span class="n">start_idx_valid</span><span class="p">,</span> <span class="n">end_idx_valid</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validation_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">validation_dataset</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_validation_iterator</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># dummy batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_batch</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="c1"># Dataset in RAM #</span>
+    <span class="c1"># ---------------#</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_load_container_filepaths_as_lists</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">,</span> <span class="n">starting_example</span><span class="p">,</span> <span class="n">ending_example</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;container dir &#39;</span> <span class="o">+</span> <span class="n">cont_dir</span> <span class="o">+</span> <span class="s1">&#39; does not exist&#39;</span><span class="p">)</span>
+
+        <span class="n">cont_filenames</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">)</span>
+        <span class="n">cont_filenames</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">cont_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">,</span> <span class="n">cont_filename</span><span class="p">)</span> <span class="k">for</span> <span class="n">cont_filename</span> <span class="ow">in</span> <span class="n">cont_filenames</span><span class="p">]</span>
+
+        <span class="n">grouped_conts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cont_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cont_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cont_paths</span><span class="p">):</span>
+            <span class="n">seq_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cont_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">seq_id</span> <span class="o">&lt;</span> <span class="n">starting_example</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">seq_id</span> <span class="o">&gt;</span> <span class="n">ending_example</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">trimmed_string</span> <span class="o">=</span> <span class="n">cont_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">current_cont_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">)</span> <span class="k">if</span> <span class="nb">str</span><span class="o">.</span><span class="n">isdigit</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="n">current_cont_num</span> <span class="o">!=</span> <span class="n">cont_num</span> <span class="ow">and</span> <span class="n">seq_id</span> <span class="o">!=</span> <span class="n">starting_example</span><span class="p">:</span>
+                <span class="n">cont_num</span> <span class="o">=</span> <span class="n">current_cont_num</span>
+                <span class="n">grouped_conts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cont_path</span><span class="p">)</span>
+        <span class="n">grouped_conts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grouped_conts</span>
+
+    <span class="k">def</span> <span class="nf">_get_containers_w_filepath_img_entries_as_tensor_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container_filepaths</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">_to_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key_chain</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="p">[[</span><span class="n">x</span><span class="p">]]</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">all_containers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loading containers into RAM...&#39;</span><span class="p">)</span>
+        <span class="n">num_seqs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">)</span>
+        <span class="n">max_seq_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">container_filepaths</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">seq_idx</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;sequence </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">num_seqs</span><span class="p">))</span>
+            <span class="n">window_containers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tf_container</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">filepath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">seq_len</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                    <span class="n">container_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+                <span class="n">tf_container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="n">container_dict</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_to_tensor</span><span class="p">)</span>
+                <span class="n">window_containers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf_container</span><span class="p">)</span>
+            <span class="n">window_containers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">tf_container</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_seq_len</span> <span class="o">-</span> <span class="n">seq_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># padding for shorter sequences</span>
+            <span class="n">joined_window_containers</span> <span class="o">=</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">window_containers</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tf</span><span class="p">)</span>
+            <span class="n">all_containers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">joined_window_containers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_containers</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">)</span>
+
+    <span class="c1"># Dynamic Windowing #</span>
+    <span class="c1"># ------------------#</span>
+
+    <span class="k">def</span> <span class="nf">_group_tensor_into_windowed_tensor_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">seq_info</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gather_idxs</span><span class="p">),</span>
+                              <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_windows_in_seq</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">seq_info</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">window_idxs_in_seq</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)),</span>
+                                  <span class="p">(</span><span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">window_idxs_in_seq</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">gather_idxs_flat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gather_idxs</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">*</span> <span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gather_idxs_flat</span><span class="p">),</span>
+                              <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                                        <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">]),</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_group_tensor_into_windowed_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">valid_first_frame</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame</span><span class="p">[:</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame_pruned</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="n">window_idxs_single</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">valid_first_frame_pruned</span><span class="p">)</span>
+        <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">map_fn</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x_</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">x_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                                           <span class="n">window_idxs_single</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">num_valid_windows_for_seq</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">window_idxs_single</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gather_idxs</span><span class="p">),</span>
+                          <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">num_valid_windows_for_seq</span><span class="p">,</span>
+                                     <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">]),</span>
+                                     <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_group_container_into_windowed_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_tensor_into_windowed_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">container</span><span class="o">.</span><span class="n">valid_first_frame</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;seq_info&#39;</span> <span class="ow">in</span> <span class="n">container</span><span class="p">:</span>
+                <span class="n">seq_info</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">seq_info</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">seq_info</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_group_tensor_into_windowed_tensor_simple</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">seq_info</span><span class="p">))</span>
+
+    <span class="c1"># Dynamic File Reading #</span>
+    <span class="c1"># ---------------------#</span>
+
+    <span class="c1"># json to container</span>
+
+    <span class="k">def</span> <span class="nf">_load_json_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_filepaths</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">map_fn</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">json_path</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">json_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">json_path</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">json_filepaths</span><span class="p">,</span>
+            <span class="n">parallel_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parallel_window_iterations</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_json_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_strings</span><span class="p">):</span>
+        <span class="n">json_strings_stack</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">json_strings</span><span class="p">)</span>
+        <span class="n">highest_idx_entry</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">json_strings</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">json_container_stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">Container</span><span class="p">(</span><span class="n">tfio</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">serialization</span><span class="o">.</span><span class="n">decode_json</span><span class="p">(</span>
+            <span class="n">json_str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container_tensor_spec</span><span class="p">))</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">json_str</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span>
+                                <span class="n">Container</span><span class="p">(</span><span class="n">tfio</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">serialization</span><span class="o">.</span><span class="n">decode_json</span><span class="p">(</span>
+                                    <span class="n">json_strings</span><span class="p">[</span><span class="n">highest_idx_entry</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container_tensor_spec</span><span class="p">))</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">json_str</span> <span class="ow">in</span> <span class="n">json_strings_stack</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">json_container_stack</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">)</span>
+
+    <span class="c1"># container pruning</span>
+
+    <span class="k">def</span> <span class="nf">_prune_unused_key_chains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">unused_key_chain</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">unused_key_chains</span><span class="p">:</span>
+            <span class="n">container</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">prune_key_chain</span><span class="p">(</span><span class="n">unused_key_chain</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">container</span>
+
+    <span class="c1"># images</span>
+
+    <span class="k">def</span> <span class="nf">_uint8_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">map_fn</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">img_path</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_image</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span>
+                <span class="n">tf</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir_tensor</span><span class="p">,</span> <span class="n">img_path</span><span class="p">]))),</span> <span class="n">filepaths_in_window</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
+            <span class="n">parallel_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parallel_window_iterations</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+
+    <span class="k">def</span> <span class="nf">_depth_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">bitcast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">map_fn</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">depth_img_path</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_image</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir_tensor</span><span class="p">,</span> <span class="n">depth_img_path</span><span class="p">])),</span> <span class="n">channels</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span> <span class="n">filepaths_in_window</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span>
+            <span class="n">parallel_iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parallel_window_iterations</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_str_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">key_chain</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;image&#39;</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;depth&#39;</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_depth_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uint8_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">_load_images_from_filepath_tensors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_str_fn</span><span class="p">)</span>
+
+    <span class="c1"># Dataset Creation #</span>
+    <span class="c1"># -----------------#</span>
+
+    <span class="k">def</span> <span class="nf">_get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starting_example</span><span class="p">,</span> <span class="n">ending_example</span><span class="p">):</span>
+
+        <span class="c1"># container filepaths</span>
+        <span class="n">container_filepaths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_container_filepaths_as_lists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">starting_example</span><span class="p">,</span>
+                                                                      <span class="n">ending_example</span><span class="p">)</span>
+        <span class="n">max_seq_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">container_filepaths</span><span class="p">]),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences_to_use</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">container_filepaths</span> <span class="o">=</span> <span class="n">container_filepaths</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences_to_use</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># windowing values</span>
+            <span class="n">window_idxs_per_seq</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gather_idxs</span> <span class="o">=</span> \
+                <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">map_fn</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">window_idxs_per_seq</span><span class="p">),</span>
+                           <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">container_filepaths</span><span class="p">]</span>
+
+        <span class="c1"># identify which directories are for rgb loading and which are for rgba-&gt;float loading</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_img_channel_dims</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+            <span class="n">first_container_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+        <span class="n">first_container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="n">first_container_dict</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_to_tensor_spec</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key_chain</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+            <span class="n">value_as_tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">(</span><span class="n">value_as_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">value_as_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_tensor_spec</span> <span class="o">=</span> <span class="n">first_container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_to_tensor_spec</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">first_container</span><span class="o">.</span><span class="n">to_iterator</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="n">full_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">full_filepath</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">img</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_img_channel_dims</span><span class="p">[</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># padding to make rectangular</span>
+        <span class="n">container_filepaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">max_seq_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">container_filepaths</span><span class="p">]</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">preload_containers</span><span class="p">:</span>
+            <span class="c1"># load containers with vector data and image filepath entries</span>
+            <span class="n">container_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_containers_w_filepath_img_entries_as_tensor_slices</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">container_slices</span> <span class="o">=</span>\
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span><span class="p">(</span><span class="n">container_slices</span><span class="p">,</span> <span class="p">[</span><span class="n">ending_example</span> <span class="o">-</span> <span class="n">starting_example</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># prune unwanted chains of keys</span>
+            <span class="k">if</span> <span class="s1">&#39;unused_key_chains&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+                <span class="n">container_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prune_unused_key_chains</span><span class="p">(</span><span class="n">container_slices</span><span class="p">)</span>
+
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">container_slices</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># load containers with filepath entries</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_json_files</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_parse_json_strings</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;unused_key_chains&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prune_unused_key_chains</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_container_into_windowed_container</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+                              <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">unbatch</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">shuffle_buffer_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">((</span><span class="n">max_seq_len</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">shuffle_buffer_size</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_load_images_from_filepath_tensors</span><span class="p">,</span>
+                              <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">post_proc_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">post_proc_fn</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_gpu</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">prefetch_to_device</span><span class="p">(</span><span class="s1">&#39;/GPU:0&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s1">&#39;single_pass&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">single_pass</span><span class="p">):</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="c1"># Public Methods #</span>
+    <span class="c1"># ---------------#</span>
+
+<div class="viewcode-block" id="TFDataLoader.get_next_batch"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader.get_next_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dataset_key</span> <span class="o">==</span> <span class="s1">&#39;training&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_iterator</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dataset_key</span> <span class="o">==</span> <span class="s1">&#39;validation&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_validation_iterator</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;invalid key&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFDataLoader.get_next_training_batch"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader.get_next_training_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_training_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_next_batch</span><span class="p">(</span><span class="s1">&#39;training&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFDataLoader.get_next_validation_batch"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader.get_next_validation_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_validation_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_next_batch</span><span class="p">(</span><span class="s1">&#39;validation&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFDataLoader.get_dummy_batch"><a class="viewcode-back" href="../../../data_loaders/tf_data_loader/TFDataLoader.html#ivy_builder.data_loaders.tf_data_loader.TFDataLoader.get_dummy_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_dummy_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_batch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_next_training_batch</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dummy_batch</span><span class="o">.</span><span class="n">to_random</span><span class="p">(</span><span class="n">tf</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

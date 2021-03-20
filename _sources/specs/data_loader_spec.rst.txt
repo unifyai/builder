@@ -1,0 +1,16 @@
+Data loader spec
+================
+
+.. automodule:: ivy_builder.specs.data_loader_spec
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Data loader spec
+
+   data_loader_spec/DataLoaderSpec.rst
+

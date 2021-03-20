@@ -1,0 +1,16 @@
+Data loader
+===========
+
+.. automodule:: ivy_builder.empty.data_loader
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Data loader
+
+   data_loader/EmptyDataLoader.rst
+

@@ -1,0 +1,130 @@
+.. raw:: html
+
+  <embed>
+    <a href="https://github.com/ivy-dl/ivy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+  </embed>
+
+.. raw:: html
+
+    <p align="center">
+        <img width="75%" style="display: block;" src='_images/logo.png'>
+    </p>
+
+.. raw:: html
+
+    <br/>
+    <a href="https://pypi.org/project/ivy-builder">
+        <img style="float: left; padding-right: 4px; padding-bottom: 4px;" src="https://badge.fury.io/py/ivy-builder.svg">
+    </a>
+    <a href="https://www.apache.org/licenses/LICENSE-2.0">
+        <img style="float: left; padding-right: 4px; padding-bottom: 4px;" src="https://img.shields.io/pypi/l/ivy-builder">
+    </a>
+    <a href="https://github.com/ivy-dl/builder/actions?query=workflow%3Adocs">
+        <img style="float: left; padding-right: 4px; padding-bottom: 4px;" src="https://img.shields.io/github/workflow/status/ivy-dl/builder/docs?label=docs">
+    </a>
+    <a href="https://github.com/ivy-dl/builder/actions?query=workflow%3Anightly-tests">
+        <img style="float: left; padding-right: 4px; padding-bottom: 4px;" src="https://img.shields.io/github/workflow/status/ivy-dl/builder/nightly-tests?label=nightly">
+    </a>
+    <a href="https://discord.gg/EN9YS3QW8w">
+        <img style="float: left; padding-right: 4px; padding-bottom: 4px;" src="https://img.shields.io/discord/799879767196958751?color=blue&label=%20&logo=discord&logoColor=white">
+    </a>
+    <br clear="all" />
+
+**Build custom Ivy training tasks with clear, hierarchical and robust user specifications.**
+
+.. raw:: html
+
+    <div style="display: block;">
+        <img width="4%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/empty.png">
+        <a href="https://jax.readthedocs.io">
+            <img width="12%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/jax_logo.png">
+        </a>
+        <img width="6.66%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/empty.png">
+        <a href="https://www.tensorflow.org">
+            <img width="12%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/tensorflow_logo.png">
+        </a>
+        <img width="6.66%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/empty.png">
+        <a href="https://pytorch.org">
+            <img width="12%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/pytorch_logo.png">
+        </a>
+        <img width="6.66%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/empty.png">
+        <a href="https://mxnet.apache.org">
+            <img width="12%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/mxnet_logo.png">
+        </a>
+        <img width="6.66%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/empty.png">
+        <a href="https://numpy.org">
+            <img width="12%" style="float: left;" src="https://raw.githubusercontent.com/ivy-dl/ivy-dl.github.io/master/img/externally_linked/logos/supported/numpy_logo.png">
+        </a>
+    </div>
+
+Citation
+--------
+
+::
+
+    @article{lenton2021ivy,
+      title={Ivy: Templated Deep Learning for Inter-Framework Portability},
+      author={Lenton, Daniel and Pardo, Fabio and Falck, Fabian and James, Stephen and Clark, Ronald},
+      journal={arXiv preprint arXiv:2102.02886},
+      year={2021}
+    }
+
+Documentation Tree
+------------------
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Guides
+
+   why_ivy.rst
+   using_ivy.rst
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Abstract
+
+   abstract/trainers.rst
+   abstract/data_loader.rst
+   abstract/network.rst
+   abstract/trainer.rst
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Data loaders
+
+   data_loaders/tf_data_loader.rst
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Empty
+
+   empty/trainers.rst
+   empty/data_loader.rst
+   empty/network.rst
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Specs
+
+   specs/data_loader_spec.rst
+   specs/dataset_dirs.rst
+   specs/dataset_spec.rst
+   specs/network_spec.rst
+   specs/trainer_spec.rst
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Docs
+
+   docs/ivy.rst
+   docs/ivy_mech.rst
+   docs/ivy_vision.rst
+   docs/ivy_robot.rst
+   docs/ivy_memory.rst
+   docs/ivy_gym.rst
+

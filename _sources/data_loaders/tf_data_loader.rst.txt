@@ -1,0 +1,16 @@
+Tf data loader
+==============
+
+.. automodule:: ivy_builder.data_loaders.tf_data_loader
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Tf data loader
+
+   tf_data_loader/TFDataLoader.rst
+

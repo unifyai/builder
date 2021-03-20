@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TrainerSpec &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Ivy" href="../../../ivy"" />
+    <link rel="prev" title="Trainer spec" href="../trainer_spec.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../why_ivy.html">Why Ivy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../using_ivy.html">Using Ivy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../empty/network.html">Network</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../network_spec.html">Network spec</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../trainer_spec.html">Trainer spec</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">TrainerSpec</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ivy"">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../mech"">Ivy Mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../vision"">Ivy Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../robot"">Ivy Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory"">Ivy Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gym"">Ivy Gym</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../trainer_spec.html">Trainer spec</a> &raquo;</li>
+        
+      <li>TrainerSpec</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/specs/trainer_spec/TrainerSpec.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="trainerspec">
+<h1>TrainerSpec<a class="headerlink" href="#trainerspec" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ivy_builder.specs.trainer_spec.</span></code><code class="sig-name descname"><span class="pre">TrainerSpec</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../abstract/data_loader/DataLoader.html#ivy_builder.abstract.data_loader.DataLoader" title="ivy_builder.abstract.data_loader.DataLoader"><span class="pre">ivy_builder.abstract.data_loader.DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../abstract/network/Network.html#ivy_builder.abstract.network.Network" title="ivy_builder.abstract.network.Network"><span class="pre">ivy_builder.abstract.network.Network</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ld_chkpt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vis_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scalars</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_vis</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_validation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_iteration</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_iterations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">6.25e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_train_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_trace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_detect_weights</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/specs/trainer_spec.html#TrainerSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ivy.core.container.Container</span></code></p>
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.__init__">
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../abstract/data_loader/DataLoader.html#ivy_builder.abstract.data_loader.DataLoader" title="ivy_builder.abstract.data_loader.DataLoader"><span class="pre">ivy_builder.abstract.data_loader.DataLoader</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../abstract/network/Network.html#ivy_builder.abstract.network.Network" title="ivy_builder.abstract.network.Network"><span class="pre">ivy_builder.abstract.network.Network</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'log'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite_log_dir</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ld_chkpt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vis_freq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scalars</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_vis</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_validation</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_iteration</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_iterations</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">6.25e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_learning_rate</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0.0001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_train_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_trace</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_detect_weights</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../_modules/ivy_builder/specs/trainer_spec.html#TrainerSpec.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>parameters which define the training procedure</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.data_loader">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">data_loader</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.data_loader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.network">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">network</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.network" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.log_dir">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">log_dir</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.log_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.overwrite_log_dir">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">overwrite_log_dir</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.overwrite_log_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.seed">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">seed</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.seed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.ld_chkpt">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">ld_chkpt</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.ld_chkpt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.save_freq">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">save_freq</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.save_freq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.log_freq">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">log_freq</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.log_freq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.vis_freq">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">vis_freq</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.vis_freq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.log_scalars">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">log_scalars</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.log_scalars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.log_vis">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">log_vis</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.log_vis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.log_validation">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">log_validation</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.log_validation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.starting_iteration">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">starting_iteration</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.starting_iteration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.total_iterations">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">total_iterations</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.total_iterations" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.initial_learning_rate">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">initial_learning_rate</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.initial_learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.min_learning_rate">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">min_learning_rate</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.min_learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.max_learning_rate">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">max_learning_rate</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.max_learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.custom_train_step">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">custom_train_step</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.custom_train_step" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.save_trace">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">save_trace</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.save_trace" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.specs.trainer_spec.TrainerSpec.auto_detect_weights">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">auto_detect_weights</span></code><a class="headerlink" href="#ivy_builder.specs.trainer_spec.TrainerSpec.auto_detect_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><strong>Supported Frameworks:</strong></div>
+</div>
+<p><a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://jax.readthedocs.io"><img alt="jax_logo" src="../../_images/jax_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://www.tensorflow.org"><img alt="tf_logo" src="../../_images/tensorflow_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://pytorch.org"><img alt="pytorch_logo" src="../../_images/pytorch_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://mxnet.apache.org"><img alt="mxnet_logo" src="../../_images/mxnet_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://numpy.org"><img alt="numpy_logo" src="../../_images/numpy_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../_images/empty.png"><img alt="empty" src="../../_images/empty.png" style="width: 4%;" /></a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../../ivy"" class="btn btn-neutral float-right" title="Ivy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../trainer_spec.html" class="btn btn-neutral float-left" title="Trainer spec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

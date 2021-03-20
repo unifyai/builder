@@ -1,0 +1,16 @@
+Trainer
+=======
+
+.. automodule:: ivy_builder.abstract.trainer
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Trainer
+
+   trainer/Trainer.rst
+

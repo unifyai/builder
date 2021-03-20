@@ -1,0 +1,16 @@
+Dataset spec
+============
+
+.. automodule:: ivy_builder.specs.dataset_spec
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Dataset spec
+
+   dataset_spec/DatasetSpec.rst
+

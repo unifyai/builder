@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TFTrainer &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../why_ivy.html">Why Ivy?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../using_ivy.html">Using Ivy</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Docs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ivy"">Ivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../mech"">Ivy Mech</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../vision"">Ivy Vision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../robot"">Ivy Robot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../memory"">Ivy Memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gym"">Ivy Gym</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TFTrainer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/abstract/trainers/tf_trainer/TFTrainer.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tftrainer">
+<h1>TFTrainer<a class="headerlink" href="#tftrainer" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ivy_builder.abstract.trainers.tf_trainer.</span></code><code class="sig-name descname"><span class="pre">TFTrainer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec"><span class="pre">ivy_builder.specs.trainer_spec.TrainerSpec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/ivy_builder/abstract/trainers/tf_trainer.html#TFTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer" title="ivy_builder.abstract.trainer.Trainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ivy_builder.abstract.trainer.Trainer</span></code></a></p>
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.__init__">
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec"><span class="pre">ivy_builder.specs.trainer_spec.TrainerSpec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../_modules/ivy_builder/abstract/trainers/tf_trainer.html#TFTrainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save">
+<code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../_modules/ivy_builder/abstract/trainers/tf_trainer.html#TFTrainer.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the network weights in checkpoint file
+:param checkpoint_path: path of the checkpoint file for saving the weights</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.restore">
+<code class="sig-name descname"><span class="pre">restore</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_step</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../_modules/ivy_builder/abstract/trainers/tf_trainer.html#TFTrainer.restore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>restore the network weights from checkpoint file
+:param checkpoint_path: path of the checkpoint file for loading the weights
+:param global_step: training step to start at for continued training</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save_model">
+<code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">saved_model_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../../_modules/ivy_builder/abstract/trainers/tf_trainer.html#TFTrainer.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>saved the model in saved model format, from the specified checkpoint
+:param saved_model_path: path to save the new saved model
+:param checkpoint_path: path of the network weights in checkpoint files</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.moving_average_loss">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">moving_average_loss</span></code><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.moving_average_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainers.tf_trainer.TFTrainer.learning_rate">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">learning_rate</span></code><a class="headerlink" href="#ivy_builder.abstract.trainers.tf_trainer.TFTrainer.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><strong>Supported Frameworks:</strong></div>
+</div>
+<p><a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://jax.readthedocs.io"><img alt="jax_logo" src="../../../_images/jax_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://www.tensorflow.org"><img alt="tf_logo" src="../../../_images/tensorflow_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://pytorch.org"><img alt="pytorch_logo" src="../../../_images/pytorch_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://mxnet.apache.org"><img alt="mxnet_logo" src="../../../_images/mxnet_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a> <a class="reference external" href="https://numpy.org"><img alt="numpy_logo" src="../../../_images/numpy_logo.png" style="width: 14%;" /></a> <a class="reference internal" href="../../../_images/empty.png"><img alt="empty" src="../../../_images/empty.png" style="width: 4%;" /></a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

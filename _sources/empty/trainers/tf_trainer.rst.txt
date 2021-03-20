@@ -1,0 +1,16 @@
+Tf trainer
+==========
+
+.. automodule:: ivy_builder.empty.trainers.tf_trainer
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Tf trainer
+
+   tf_trainer/EmptyTFTrainer.rst
+
