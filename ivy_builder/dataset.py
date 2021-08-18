@@ -103,13 +103,13 @@ class IteratorDataset:
         self._with_prefetching = with_prefetching
         self._prefetch_timeout = prefetch_timeout
         self._parallel_method = parallel_method
+        self._prefetch_running = False
         if self._with_prefetching:
-            self._prefetch_running = False
             if self._parallel_method == 'process':
                 self._input_queue = multiprocessing.Queue()
                 self._output_queue = multiprocessing.Queue()
                 self._worker = multiprocessing.Process(
-                    target=self._process_worker_fn, args=(self._base_dataset_iterator, self._input_queue,
+                    target=self._process_worker_fn, args=(base_dataset, self._base_dataset_iterator, self._input_queue,
                                                           self._output_queue))
                 self._get_next = self._get_from_process
             elif self._parallel_method == 'thread':
@@ -127,15 +127,20 @@ class IteratorDataset:
     # --------#
 
     @staticmethod
-    def _process_worker_fn(base_dataset, input_queue, output_queue):
+    def _process_worker_fn(base_dataset, base_dataset_iterator, input_queue, output_queue):
         keep_going = True
         while keep_going:
             try:
-                keep_going = input_queue.get(timeout=5.0)
+                keep_going = input_queue.get(timeout=1.0)
             except queue.Empty:
                 continue
-            output_queue.put(next(base_dataset).to_dict())
+            output_queue.put(next(base_dataset_iterator).to_dict())
+        # with open("{}_{}.log".format(base_dataset.name, id(base_dataset)), "a+") as f:
+        #     f.write("closing dataset: {}\n".format(time.perf_counter()))
         base_dataset.close()
+        # with open("{}_{}.log".format(base_dataset.name, id(base_dataset)), "a+") as f:
+        #     f.write("dataset closed: {}\n".format(time.perf_counter()))
+        return
 
     def _thread_worker_fn(self):
         while True:
@@ -198,12 +203,15 @@ class IteratorDataset:
         self.close()
 
     def close(self):
-        if self._with_prefetching:
+        if not isinstance(self._base_dataset, ivy.Container):
+            self._base_dataset.close()
+        if self._prefetch_running:
             if self._parallel_method == 'process':
                 try:
                     self._input_queue.put(False)
                     if self._worker.is_alive():
-                        self._worker.join(timeout=5.0)
+                        # ToDo: increase this timeout once the blocking issue for json data loader is fixed
+                        self._worker.join(timeout=0.1)
                     self._input_queue.cancel_join_thread()
                     self._input_queue.close()
                     self._output_queue.cancel_join_thread()
@@ -211,16 +219,13 @@ class IteratorDataset:
                 finally:
                     if self._worker.is_alive():
                         self._worker.terminate()
-                    del self._worker
-                    del self._input_queue
-                    del self._output_queue
             else:
                 self._lock_for_spin.acquire()
                 self._keep_spinning = False
                 self._lock_for_spin.release()
                 if self._thread.is_alive():
                     self._thread.join()
-        self._base_dataset.close()
+        self._prefetch_running = False
 
 
 class MapDataset:
@@ -270,7 +275,7 @@ class MapDataset:
     def _deep_copy(self, num_processes=None, shared_list=None, shared_dict=None):
         # noinspection PyProtectedMember
         return MapDataset(
-            base_dataset=self._base_dataset if isinstance(self._base_dataset, ivy.Container)
+            base_dataset=self._base_dataset.copy() if isinstance(self._base_dataset, ivy.Container)
             else self._base_dataset._deep_copy(), name=self._name, size=self._size,
             base_slice_fn=self._base_slice_fn, trans_fn=self._trans_fn, slice_fn=self._slice_fn,
             elementwise_query_fn=self._elementwise_query_fn, cache_size=self._cache_size, cache=self._cache,
@@ -297,6 +302,8 @@ class MapDataset:
 
     @staticmethod
     def _worker_fn(index_queue, output_queue, dataset):
+        # with open("{}_{}.log".format(dataset.name, id(dataset)), "a+") as f:
+        #     f.write("worker started: {}\n".format(time.perf_counter()))
         while True:
             try:
                 slice_obj = index_queue.get(timeout=5.0)
@@ -305,7 +312,11 @@ class MapDataset:
             if slice_obj is None:
                 # ToDo: work out why this command below works, but del dataset hangs, despite only calling
                 #  close(), perhaps processes have trouble explicitly deleting arguments passed in?
+                # with open("{}_{}.log".format(dataset.name, id(dataset)), "a+") as f:
+                #     f.write("closing dataset: {}\n".format(time.perf_counter()))
                 dataset.close()
+                # with open("{}_{}.log".format(dataset.name, id(dataset)), "a+") as f:
+                #     f.write("dataset closed, worker exited: {}\n".format(time.perf_counter()))
                 return
             item = dataset[slice_obj]
             output_queue.put(item.to_dict())
@@ -350,7 +361,8 @@ class MapDataset:
     def _default_base_slice_fn(slice_obj, dataset):
         if isinstance(slice_obj, numbers.Number):
             slice_obj = slice(slice_obj, slice_obj+1, 1)
-        return MapDataset._slice_dataset(slice_obj, dataset)
+        ret = MapDataset._slice_dataset(slice_obj, dataset)
+        return ret
 
     @staticmethod
     def _default_slice_fn(slice_obj, sliced_dataset, dataset_size):
@@ -417,7 +429,8 @@ class MapDataset:
 
     def _get_item_after_cache_n_wrap(self, slice_obj):
         base_slice_obj = self._wrap_base_slice_obj(slice_obj)
-        return self._get_item_from_slice_objs(base_slice_obj, slice_obj)
+        ret = self._get_item_from_slice_objs(base_slice_obj, slice_obj)
+        return ret
 
     def _get_item(self, slice_obj):
         # ToDo: simplify this method for the case of no caching
@@ -432,7 +445,7 @@ class MapDataset:
             so = int(so) if self._is_int(so) else so
             cache_item = None
             try:
-                cache_item = self._cache[so].map(lambda x, kc: [x] if ivy.is_array(x) else x)
+                cache_item = self._cache[so].map(lambda x, kc: [x])
             except KeyError:
                 pre_cache_items_exist = True
             from_cache = ivy.exists(cache_item)
@@ -455,6 +468,7 @@ class MapDataset:
                     self._add_to_cache(slc, item)
                 items.append(item)
         if len(items) == 1:
+            # ToDo: determine whether the map should be applied to both below
             if isinstance(slice_obj, numbers.Number):
                 return items[0][0]
             return items[0].map(lambda x, kc: x if isinstance(x, list) else [x])
@@ -680,7 +694,7 @@ class MapDataset:
                 for i, w in enumerate(self._workers):
                     self._slice_queues[i].put(None)
                     if w.is_alive():
-                        w.join(timeout=5.0)
+                        w.join(timeout=1.0)
                 for q in self._slice_queues:
                     q.cancel_join_thread()
                     q.close()
@@ -691,9 +705,6 @@ class MapDataset:
                 for w in self._workers:
                     if w.is_alive():
                         w.terminate()
-                del self._workers
-                del self._slice_queues
-                del self._output_queues
         # This line below is only needed because close() is called explicitly from inside the worker_fn.
         #  If the dataset can be deleted directly from inside worker_fn, then this subsequent delete will not be called.
         self._has_workers = False

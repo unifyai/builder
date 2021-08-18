@@ -2,6 +2,7 @@
 import ivy
 import time
 import pytest
+import psutil
 import numpy as np
 import ivy_tests.helpers as helpers
 
@@ -546,49 +547,74 @@ class TestShuffle:
 
 class TestIteratorPrefetch:
 
-    def _init(self, array_shape, parallel_method):
+    def _init(self, array_shape):
         x = [ivy.array(0), ivy.array(1), ivy.array(2), ivy.array(3), ivy.array(4),
              ivy.array(5), ivy.array(6), ivy.array(7), ivy.array(8), ivy.array(9)]
         self._x = [ivy.reshape(item, array_shape) for item in x]
-        dataset_container = ivy.Container({'x': self._x})
-        dataset = MapDataset(dataset_container, 'base', dataset_container.shape[0], cache_size=0)
 
-        def sleep_fn(cont, ivyh=None):
-            time.sleep(0.2)
+        # sleep function
+        def sleep_fn(cont, _):
+            start_time = time.perf_counter()
+            cur_time = start_time
+            while cur_time - start_time < 0.021:
+                cur_time = time.perf_counter()
             return cont
 
-        self._dataset_wo_prefetch = dataset.map('sleep', sleep_fn)
-        self._dataset_w_prefetch = self._dataset_wo_prefetch.to_iterator('prefetch', parallel_method=parallel_method)
+        self._sleep_fn = sleep_fn
+
+        # container
+        self._dataset_container = ivy.Container({'x': self._x})
+
+    # noinspection PyStatementEffect
+    @pytest.mark.parametrize(
+        "array_shape", [[1], []])
+    def test_without_prefetch(self, dev_str, f, call, array_shape):
+
+        if call is helpers.mx_call:
+            pytest.skip()
+
+        # dataset
+        self._init(array_shape)
+        dataset = MapDataset(self._dataset_container, 'base', self._dataset_container.shape[0], cache_size=0)
+        dataset = dataset.map('sleep', self._sleep_fn)
+
+        for i in range(15):
+            start_time = time.process_time()
+            dataset[i]
+            time_taken = time.process_time() - start_time
+            assert time_taken > 0.02
+
+        # delete
+        dataset.close()
+        del dataset
 
     # noinspection PyStatementEffect
     @pytest.mark.parametrize(
         "array_shape", [[1], []])
     @pytest.mark.parametrize(
         "parallel_method", ["thread", "process"])
-    def test_single(self, dev_str, f, call, array_shape, parallel_method):
+    def test_with_prefetch(self, dev_str, f, call, array_shape, parallel_method):
 
         if call is helpers.mx_call:
             pytest.skip()
 
-        self._init(array_shape, parallel_method)
+        # dataset
+        self._init(array_shape)
+        dataset = MapDataset(self._dataset_container, 'base', self._dataset_container.shape[0], cache_size=0)
+        dataset = dataset.map('sleep', self._sleep_fn)
+        dataset = dataset.to_iterator('prefetch', parallel_method=parallel_method)
 
-        for i in range(5):
-            start_time = time.perf_counter()
-            self._dataset_wo_prefetch[i]
-            assert time.perf_counter() - start_time > 0.2
-
-        for i in range(5):
-            start_time = time.perf_counter()
-            next(self._dataset_w_prefetch)
+        for i in range(15):
+            start_time = time.process_time()
+            next(dataset)
+            time_taken = time.process_time() - start_time
             if i > 0:
-                assert time.perf_counter() - start_time < 0.2
-            time.sleep(0.3)
+                assert time_taken < 0.02
+            time.sleep(0.05)
 
         # delete
-        self._dataset_wo_prefetch.close()
-        del self._dataset_wo_prefetch
-        self._dataset_w_prefetch.close()
-        del self._dataset_w_prefetch
+        dataset.close()
+        del dataset
 
 
 class TestMapPrefetch:
@@ -598,49 +624,76 @@ class TestMapPrefetch:
              ivy.array(5), ivy.array(6), ivy.array(7), ivy.array(8), ivy.array(9)]
         self._x = [ivy.reshape(item, array_shape) for item in x]
 
-        dataset_container = ivy.Container({'x': self._x})
-        dataset = MapDataset(dataset_container, 'base', dataset_container.shape[0], cache_size=0,
-                                         num_processes=num_processes)
-
+        # sleep function
         def sleep_fn(cont, _):
-            time.sleep(0.2)
+            start_time = time.perf_counter()
+            cur_time = start_time
+            while cur_time - start_time < 0.021:
+                cur_time = time.perf_counter()
             return cont
 
-        self._dataset_wo_prefetch = dataset.map('sleep', sleep_fn)
-        self._dataset_w_prefetch = self._dataset_wo_prefetch.prefetch('prefetch', 1)
+        self._sleep_fn = sleep_fn
+
+        # container
+        self._dataset_container = ivy.Container({'x': self._x})
 
     # noinspection PyStatementEffect
     @pytest.mark.parametrize(
         "array_shape", [[1], []])
     @pytest.mark.parametrize(
         "num_processes", [1, 2])
-    def test_single(self, dev_str, f, call, array_shape, num_processes):
+    def test_without_prefetch(self, dev_str, f, call, array_shape, num_processes):
 
         if call is helpers.mx_call:
             # For some reason, mxnet does not work well with prefetching
             pytest.skip()
 
+        # dataset
         self._init(array_shape, num_processes)
+        dataset = MapDataset(self._dataset_container, 'base', self._dataset_container.shape[0],
+                             cache_size=0, num_processes=num_processes)
+        self._dataset = dataset.map('sleep', self._sleep_fn)
 
-        for i in range(5):
-            start_time = time.perf_counter()
-            assert self._dataset_wo_prefetch[i].x == i
-            assert self._dataset_wo_prefetch[i].x == i
-            time_taken = time.perf_counter() - start_time
-            assert time_taken > 0.2
-
-        for i in range(5):
-            start_time = time.perf_counter()
-            assert self._dataset_w_prefetch[i].x == i
-            assert self._dataset_w_prefetch[i].x == i
-            end_time = time.perf_counter()
-            time_taken = end_time - start_time
-            if i > 0:
-                assert time_taken < 0.2
-            time.sleep(0.3)
+        for i in range(11):
+            start_time = time.process_time()
+            assert self._dataset[i].x == i % 10
+            assert self._dataset[i].x == i % 10
+            time_taken = time.process_time() - start_time
+            assert time_taken > 0.02
 
         # delete
-        self._dataset_wo_prefetch.close()
-        del self._dataset_wo_prefetch
-        self._dataset_w_prefetch.close()
-        del self._dataset_w_prefetch
+        self._dataset.close()
+        del self._dataset
+
+    # noinspection PyStatementEffect
+    @pytest.mark.parametrize(
+        "array_shape", [[1], []])
+    @pytest.mark.parametrize(
+        "num_processes", [1, 2])
+    def test_with_prefetch(self, dev_str, f, call, array_shape, num_processes):
+
+        if call is helpers.mx_call:
+            # For some reason, mxnet does not work well with prefetching
+            pytest.skip()
+
+        # dataset
+        self._init(array_shape, num_processes)
+        dataset = MapDataset(self._dataset_container, 'base', self._dataset_container.shape[0],
+                             cache_size=0, num_processes=num_processes)
+        dataset = dataset.map('sleep', self._sleep_fn)
+        self._dataset = dataset.prefetch('prefetch', 1)
+
+        for i in range(11):
+            start_time = time.process_time()
+            if i > 0:
+                assert i % 10 in self._dataset._base_dataset._cache._dict  # should be in the cache by now
+            assert self._dataset[i].x == i % 10  # this triggers the next cache
+            assert self._dataset[i].x == i % 10
+            time_taken = time.process_time() - start_time
+            if i > 0:
+                assert time_taken < 0.02
+            time.sleep(0.05)
+
+        # delete
+        self._dataset.close()
+        del self._dataset
