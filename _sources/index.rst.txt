@@ -1,7 +1,7 @@
 .. raw:: html
 
   <embed>
-    <a href="https://github.com/ivy-dl/ivy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <a href="https://github.com/ivy-dl/builder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
   </embed>
 
 .. raw:: html
@@ -72,38 +72,33 @@ Citation
 Documentation Tree
 ------------------
 
-.. toctree::
-   :maxdepth: -1
-   :caption: Guides
-
-   why_ivy.rst
-   using_ivy.rst
-
 
 .. toctree::
    :maxdepth: -1
    :caption: Abstract
 
-   abstract/trainers.rst
    abstract/data_loader.rst
    abstract/network.rst
+   abstract/network_group.rst
    abstract/trainer.rst
+   abstract/tuner.rst
 
 
 .. toctree::
    :maxdepth: -1
    :caption: Data loaders
 
-   data_loaders/tf_data_loader.rst
+   data_loaders/specs.rst
+   data_loaders/seq_data_loader.rst
 
 
 .. toctree::
    :maxdepth: -1
    :caption: Empty
 
-   empty/trainers.rst
    empty/data_loader.rst
    empty/network.rst
+   empty/trainer.rst
 
 
 .. toctree::
@@ -114,17 +109,28 @@ Documentation Tree
    specs/dataset_dirs.rst
    specs/dataset_spec.rst
    specs/network_spec.rst
+   specs/spec.rst
    specs/trainer_spec.rst
+   specs/tuner_spec.rst
 
 
 .. toctree::
    :maxdepth: -1
    :caption: Docs
 
-   docs/ivy.rst
-   docs/ivy_mech.rst
-   docs/ivy_vision.rst
-   docs/ivy_robot.rst
-   docs/ivy_memory.rst
-   docs/ivy_gym.rst
+   docs/ivy
+.rst
+   docs/ivy_mech
+.rst
+   docs/ivy_vision
+.rst
+   docs/ivy_robot
+.rst
+   docs/ivy_gym
+.rst
+   docs/ivy_memory
+.rst
+   docs/ivy_builder
+.rst
+   docs/ivy_models.rst
 

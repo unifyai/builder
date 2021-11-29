@@ -12,5 +12,6 @@ Network spec
    :maxdepth: -1
    :caption: Network spec
 
+   network_spec/load_class_from_str.rst
    network_spec/NetworkSpec.rst
 

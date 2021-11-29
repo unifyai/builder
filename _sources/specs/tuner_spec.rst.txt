@@ -1,0 +1,16 @@
+Tuner spec
+==========
+
+.. automodule:: ivy_builder.specs.tuner_spec
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Tuner spec
+
+   tuner_spec/TunerSpec.rst
+

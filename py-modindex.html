@@ -81,25 +81,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -107,16 +105,9 @@
 <li class="toctree-l1"><a class="reference internal" href="specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -207,12 +198,17 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="abstract/network_group.html#module-ivy_builder.abstract.network_group"><code class="xref">ivy_builder.abstract.network_group</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="abstract/trainer.html#module-ivy_builder.abstract.trainer"><code class="xref">ivy_builder.abstract.trainer</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="abstract/trainers/tf_trainer.html#module-ivy_builder.abstract.trainers.tf_trainer"><code class="xref">ivy_builder.abstract.trainers.tf_trainer</code></a></td><td>
+       <a href="abstract/tuner.html#module-ivy_builder.abstract.tuner"><code class="xref">ivy_builder.abstract.tuner</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -222,7 +218,22 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="data_loaders/tf_data_loader.html#module-ivy_builder.data_loaders.tf_data_loader"><code class="xref">ivy_builder.data_loaders.tf_data_loader</code></a></td><td>
+       <a href="checkpoints.html#module-ivy_builder.checkpoints"><code class="xref">ivy_builder.checkpoints</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="data_loaders/seq_data_loader.html#module-ivy_builder.data_loaders.seq_data_loader"><code class="xref">ivy_builder.data_loaders.seq_data_loader</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="data_loaders/specs/seq_data_loader_spec.html#module-ivy_builder.data_loaders.specs.seq_data_loader_spec"><code class="xref">ivy_builder.data_loaders.specs.seq_data_loader_spec</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="dataset.html#module-ivy_builder.dataset"><code class="xref">ivy_builder.dataset</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -237,7 +248,7 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="empty/trainers/tf_trainer.html#module-ivy_builder.empty.trainers.tf_trainer"><code class="xref">ivy_builder.empty.trainers.tf_trainer</code></a></td><td>
+       <a href="empty/trainer.html#module-ivy_builder.empty.trainer"><code class="xref">ivy_builder.empty.trainer</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
@@ -267,7 +278,17 @@
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
+       <a href="specs/spec.html#module-ivy_builder.specs.spec"><code class="xref">ivy_builder.specs.spec</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
        <a href="specs/trainer_spec.html#module-ivy_builder.specs.trainer_spec"><code class="xref">ivy_builder.specs.trainer_spec</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="specs/tuner_spec.html#module-ivy_builder.specs.tuner_spec"><code class="xref">ivy_builder.specs.tuner_spec</code></a></td><td>
        <em></em></td></tr>
    </table>
 

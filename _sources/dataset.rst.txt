@@ -1,0 +1,24 @@
+Dataset
+=======
+
+.. automodule:: ivy_builder.dataset
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Dataset
+
+   dataset/multiprocessing.rst
+   dataset/LoggedDatasetException.rst
+   dataset/EmptyDatasetException.rst
+   dataset/Cache:
+    
+    def __init__.rst
+   dataset/Dataset:
+
+    def __init__.rst
+

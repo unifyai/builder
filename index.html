@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Why Ivy?" href="why_ivy.html" /> 
+    <link rel="next" title="Data loader" href="abstract/data_loader.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,25 +79,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -105,16 +103,9 @@
 <li class="toctree-l1"><a class="reference internal" href="specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -180,7 +171,7 @@
            <div itemprop="articleBody">
             
   <embed>
-  <a href="https://github.com/ivy-dl/ivy"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa00.png"></a>
+  <a href="https://github.com/ivy-dl/builder"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa00.png"></a>
 </embed><p align="center">
     <img width="75%" style="display: block;" src='_images/logo.png'>
 </p><br/>
@@ -235,20 +226,6 @@
 <div class="section" id="documentation-tree">
 <h1>Documentation Tree<a class="headerlink" href="#documentation-tree" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="why_ivy.html">Why Ivy?</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="why_ivy.html#portable-code">Portable Code</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="using_ivy.html">Using Ivy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="using_ivy.html#writing-ivy">Writing Ivy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using_ivy.html#running-ivy">Running Ivy</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="abstract/data_loader.html">Data loader</a><ul>
@@ -259,8 +236,14 @@
 <li class="toctree-l2"><a class="reference internal" href="abstract/network/Network.html">Network</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="abstract/trainer.html">Trainer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="abstract/trainer/Trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/network_group.html">Network group</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="abstract/network_group/NetworkGroup.html">NetworkGroup</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/trainer.html">Trainer</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/tuner.html">Tuner</a><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -268,8 +251,8 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="data_loaders/tf_data_loader.html">Tf data loader</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="data_loaders/tf_data_loader/TFDataLoader.html">TFDataLoader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_loaders/seq_data_loader.html">Seq data loader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="data_loaders/seq_data_loader/SeqDataLoader.html">SeqDataLoader</a></li>
 </ul>
 </li>
 </ul>
@@ -283,6 +266,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="empty/network.html">Network</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="empty/network/EmptyNetwork.html">EmptyNetwork</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="empty/trainer.html">Trainer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="empty/trainer/EmptyTrainer.html">EmptyTrainer</a></li>
 </ul>
 </li>
 </ul>
@@ -303,26 +290,43 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="specs/network_spec.html">Network spec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="specs/network_spec/load_class_from_str.html">load_class_from_str</a></li>
 <li class="toctree-l2"><a class="reference internal" href="specs/network_spec/NetworkSpec.html">NetworkSpec</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="specs/spec.html">Spec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="specs/spec/locals_to_kwargs.html">locals_to_kwargs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="specs/spec/Spec.html">Spec</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="specs/trainer_spec.html">Trainer spec</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="specs/trainer_spec/TrainerSpec.html">TrainerSpec</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="specs/tuner_spec.html">Tuner spec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="specs/tuner_spec/TunerSpec.html">TunerSpec</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gym"">Ivy Gym</a></li>
-</ul>
 </div>
+<dl class="simple">
+<dt>.rst</dt><dd><p>docs/ivy_mech</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_vision</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_robot</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_gym</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_memory</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_builder</p>
+</dd>
+<dt>.rst</dt><dd><p>docs/ivy_models.rst</p>
+</dd>
+</dl>
 </div>
 
 
@@ -333,7 +337,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="why_ivy.html" class="btn btn-neutral float-right" title="Why Ivy?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="abstract/data_loader.html" class="btn btn-neutral float-right" title="Data loader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

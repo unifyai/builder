@@ -78,25 +78,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -104,16 +102,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -177,17 +168,61 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ivy_builder.specs.network_spec</h1><div class="highlight"><pre>
-<span></span><span class="c1"># local</span>
-<span class="kn">from</span> <span class="nn">ivy.core.container</span> <span class="k">import</span> <span class="n">Container</span>
+<span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="c1"># local</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs.spec</span> <span class="kn">import</span> <span class="n">Spec</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs</span> <span class="kn">import</span> <span class="n">DatasetSpec</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs.spec</span> <span class="kn">import</span> <span class="n">locals_to_kwargs</span>
 
 
-<div class="viewcode-block" id="NetworkSpec"><a class="viewcode-back" href="../../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec">[docs]</a><span class="k">class</span> <span class="nc">NetworkSpec</span><span class="p">(</span><span class="n">Container</span><span class="p">):</span>
+<span class="c1"># ToDo: fix cyclic imports, so this method can be imported from the builder module</span>
+<div class="viewcode-block" id="load_class_from_str"><a class="viewcode-back" href="../../../specs/network_spec/load_class_from_str.html#ivy_builder.specs.network_spec.load_class_from_str">[docs]</a><span class="k">def</span> <span class="nf">load_class_from_str</span><span class="p">(</span><span class="n">full_str</span><span class="p">):</span>
+    <span class="n">mod_str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">full_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">class_str</span> <span class="o">=</span> <span class="n">full_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">mod_str</span><span class="p">),</span> <span class="n">class_str</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="NetworkSpec.__init__"><a class="viewcode-back" href="../../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="NetworkSpec"><a class="viewcode-back" href="../../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec">[docs]</a><span class="k">class</span> <span class="nc">NetworkSpec</span><span class="p">(</span><span class="n">Spec</span><span class="p">,</span> <span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+
+<div class="viewcode-block" id="NetworkSpec.__init__"><a class="viewcode-back" href="../../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_spec</span><span class="p">:</span> <span class="n">DatasetSpec</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">dev_strs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">v_keychains</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_v_keychains</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">build_mode</span><span class="o">=</span><span class="s1">&#39;explicit&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        base class for storing general specifications of the neural network</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+        <span class="n">kw</span> <span class="o">=</span> <span class="n">locals_to_kwargs</span><span class="p">(</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dataset_spec</span><span class="o">=</span><span class="n">dataset_spec</span><span class="p">,</span>
+                         <span class="n">dev_strs</span><span class="o">=</span><span class="n">dev_strs</span><span class="p">,</span>
+                         <span class="n">v_keychains</span><span class="o">=</span><span class="n">v_keychains</span><span class="p">,</span>
+                         <span class="n">keep_v_keychains</span><span class="o">=</span><span class="n">keep_v_keychains</span><span class="p">,</span>
+                         <span class="n">build_mode</span><span class="o">=</span><span class="n">build_mode</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;subnets&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">subet_spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="s1">&#39;network_spec_class&#39;</span> <span class="ow">in</span> <span class="n">subet_spec</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subet_spec</span><span class="o">.</span><span class="n">network_spec_class</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                        <span class="n">spec_class</span> <span class="o">=</span> <span class="n">load_class_from_str</span><span class="p">(</span><span class="n">subet_spec</span><span class="o">.</span><span class="n">network_spec_class</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">spec_class</span> <span class="o">=</span> <span class="n">subet_spec</span><span class="o">.</span><span class="n">network_spec_class</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;subnets&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">],</span> <span class="n">spec_class</span><span class="p">):</span>
+                        <span class="n">subet_spec</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;subnets&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">subet_spec</span> <span class="o">=</span> <span class="n">spec_class</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="o">**</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;subnets&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">],</span>
+                                                   <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">dataset_spec</span><span class="o">=</span><span class="n">dataset_spec</span><span class="p">,</span> <span class="n">dev_strs</span><span class="o">=</span><span class="n">dev_strs</span><span class="p">)})</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">subet_spec</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">subet_spec</span><span class="o">.</span><span class="n">network_class</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">network_class</span> <span class="o">=</span> <span class="n">load_class_from_str</span><span class="p">(</span><span class="n">subet_spec</span><span class="o">.</span><span class="n">network_class</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">network_class</span> <span class="o">=</span> <span class="n">subet_spec</span><span class="o">.</span><span class="n">network_class</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">store_vars</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;store_vars&#39;</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">build_mode</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;build_mode&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_mode</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dataset_spec</span> <span class="o">=</span> <span class="n">dataset_spec</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">subnets</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">dev_strs</span> <span class="o">=</span> <span class="n">dev_strs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kwargs</span> <span class="o">=</span> <span class="n">kw</span></div></div>
 </pre></div>
 
            </div>

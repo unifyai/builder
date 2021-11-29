@@ -12,9 +12,15 @@ Builder
    :maxdepth: -1
    :caption: Builder
 
-   builder/parse_json_to_dict.rst
+   builder/load_class_from_str.rst
+   builder/parse_json_to_cont.rst
+   builder/json_spec_from_fpath.rst
+   builder/get_json_args.rst
+   builder/print_json_args.rst
    builder/save_dict_as_json.rst
    builder/spec_to_dict.rst
+   builder/trainer_to_spec_args_dict.rst
+   builder/command_line_str_to_spec_cont.rst
    builder/build_dataset_dirs.rst
    builder/build_dataset_spec.rst
    builder/build_network_specification.rst
@@ -22,6 +28,7 @@ Builder
    builder/build_data_loader_spec.rst
    builder/build_data_loader.rst
    builder/build_trainer_spec.rst
-   builder/build_tune_trainer.rst
    builder/build_trainer.rst
+   builder/build_tuner_spec.rst
+   builder/build_tuner.rst
 

@@ -78,25 +78,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -104,16 +102,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -182,7 +173,7 @@
 <h1>build_trainer<a class="headerlink" href="#build-trainer" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
 <dt id="ivy_builder.builder.build_trainer">
-<code class="sig-prename descclassname"><span class="pre">ivy_builder.builder.</span></code><code class="sig-name descname"><span class="pre">build_trainer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">data_loader_class</span></em>, <em class="sig-param"><span class="pre">network_class</span></em>, <em class="sig-param"><span class="pre">trainer_class</span></em>, <em class="sig-param"><span class="pre">dataset_dirs_args=None</span></em>, <em class="sig-param"><span class="pre">dataset_dirs_class=&lt;class</span> <span class="pre">'ivy_builder.specs.dataset_dirs.DatasetDirs'&gt;</span></em>, <em class="sig-param"><span class="pre">dataset_spec_args=None</span></em>, <em class="sig-param"><span class="pre">dataset_spec_class=&lt;class</span> <span class="pre">'ivy_builder.specs.dataset_spec.DatasetSpec'&gt;</span></em>, <em class="sig-param"><span class="pre">data_loader_spec_args=None</span></em>, <em class="sig-param"><span class="pre">data_loader_spec_class=&lt;class</span> <span class="pre">'ivy_builder.specs.data_loader_spec.DataLoaderSpec'&gt;</span></em>, <em class="sig-param"><span class="pre">network_spec_args=None</span></em>, <em class="sig-param"><span class="pre">network_spec_class=&lt;class</span> <span class="pre">'ivy_builder.specs.network_spec.NetworkSpec'&gt;</span></em>, <em class="sig-param"><span class="pre">trainer_spec_args=None</span></em>, <em class="sig-param"><span class="pre">trainer_spec_class=&lt;class</span> <span class="pre">'ivy_builder.specs.trainer_spec.TrainerSpec'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy_builder/builder.html#build_trainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.builder.build_trainer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">ivy_builder.builder.</code><code class="sig-name descname">build_trainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_loader_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">network_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">trainer_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_dirs_args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_dirs_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_dirs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_spec_args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_spec_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dataset_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_loader_spec_args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_loader_spec_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_loader_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">data_loader</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">network_spec_args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">network_spec_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">network_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">network</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">trainer_spec_args</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">trainer_spec_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">trainer_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">json_spec_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">spec_cont</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">class_priority</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy_builder/builder.html#build_trainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.builder.build_trainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>build trainer</p>
 </dd></dl>
 

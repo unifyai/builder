@@ -78,25 +78,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -104,16 +102,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -178,36 +169,47 @@
             
   <h1>Source code for ivy_builder.abstract.network</h1><div class="highlight"><pre>
 <span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
 <span class="kn">import</span> <span class="nn">abc</span>
 
 <span class="c1"># local</span>
-<span class="kn">from</span> <span class="nn">ivy_builder.specs.network_spec</span> <span class="k">import</span> <span class="n">NetworkSpec</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs.network_spec</span> <span class="kn">import</span> <span class="n">NetworkSpec</span>
 
 
-<div class="viewcode-block" id="Network"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network">[docs]</a><span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Network"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network">[docs]</a><span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
 
-<div class="viewcode-block" id="Network.__init__"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">network_spec</span><span class="p">:</span> <span class="n">NetworkSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># noinspection PyMissingConstructor</span>
+<div class="viewcode-block" id="Network.__init__"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">network_spec</span><span class="p">:</span> <span class="n">NetworkSpec</span><span class="p">,</span>
+                 <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        base class for any networks</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Network</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="o">=</span> <span class="n">network_spec</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="o">=</span> <span class="n">network_spec</span>
+        <span class="n">ivy</span><span class="o">.</span><span class="n">Module</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">dev_strs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">,</span>
+                            <span class="n">build_mode</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;build_mode&#39;</span><span class="p">),</span> <span class="s1">&#39;explicit&#39;</span><span class="p">),</span>
+                            <span class="n">store_vars</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;store_vars&#39;</span><span class="p">),</span> <span class="kc">True</span><span class="p">),</span>
+                            <span class="n">stateful</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;stateful&#39;</span><span class="p">),</span> <span class="p">[]),</span>
+                            <span class="n">arg_stateful_idxs</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;arg_stateful_idxs&#39;</span><span class="p">),</span> <span class="p">[]),</span>
+                            <span class="n">kwarg_stateful_idxs</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">if_exists</span><span class="p">(</span><span class="s1">&#39;kwarg_stateful_idxs&#39;</span><span class="p">),</span> <span class="p">[]))</span></div>
 
-<div class="viewcode-block" id="Network.get_serializable_model"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network.get_serializable_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_serializable_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Network has not implemented get_serializable_model().</span><span class="se">\n</span><span class="s1">&#39;</span>
-                        <span class="s1">&#39;Therefore, there is no model available for saving in SavedModel format.&#39;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Network.test_serializable_model"><a class="viewcode-back" href="../../../abstract/network/Network.html#ivy_builder.abstract.network.Network.test_serializable_model">[docs]</a>    <span class="k">def</span> <span class="nf">test_serializable_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_in</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Network has not implemented set_serializable_model().</span><span class="se">\n</span><span class="s1">&#39;</span>
-                        <span class="s1">&#39;Therefore, models saved in SavedModel format cannot be tested.&#39;</span><span class="p">)</span></div>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Network builder method, to be overriden</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="c1"># Getters #</span>
     <span class="c1"># --------#</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">spec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_str</span></div>
 </pre></div>
 
            </div>

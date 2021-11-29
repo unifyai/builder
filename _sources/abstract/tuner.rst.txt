@@ -1,0 +1,18 @@
+Tuner
+=====
+
+.. automodule:: ivy_builder.abstract.tuner
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Tuner
+
+   tuner/Tuner:
+
+    def __init__.rst
+

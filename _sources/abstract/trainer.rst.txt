@@ -12,5 +12,7 @@ Trainer
    :maxdepth: -1
    :caption: Trainer
 
-   trainer/Trainer.rst
+   trainer/Trainer:
+
+    def __init__.rst
 

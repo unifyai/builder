@@ -1,0 +1,16 @@
+Seq data loader
+===============
+
+.. automodule:: ivy_builder.data_loaders.seq_data_loader
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Seq data loader
+
+   seq_data_loader/SeqDataLoader.rst
+

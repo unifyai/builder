@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ivy_builder.data_loaders.seq_data_loader &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network_group.html">Network group</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/tuner.html">Tuner</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/spec.html">Spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/tuner_spec.html">Tuner spec</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ivy_builder.data_loaders.seq_data_loader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ivy_builder.data_loaders.seq_data_loader</h1><div class="highlight"><pre>
+<span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">cv2</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="n">cv2</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="kn">from</span> <span class="nn">ivy.core.container</span> <span class="kn">import</span> <span class="n">Container</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.data_loader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.data_loaders.specs.seq_data_loader_spec</span> <span class="kn">import</span> <span class="n">SeqDataLoaderSpec</span>
+
+
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<div class="viewcode-block" id="SeqDataLoader"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader">[docs]</a><span class="k">class</span> <span class="nc">SeqDataLoader</span><span class="p">(</span><span class="n">DataLoader</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SeqDataLoader.__init__"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader_spec</span><span class="p">:</span> <span class="n">SeqDataLoaderSpec</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SeqDataLoader</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_loader_spec</span><span class="p">)</span>
+
+        <span class="c1"># cpus</span>
+        <span class="k">if</span> <span class="s1">&#39;num_workers&#39;</span> <span class="ow">in</span> <span class="n">data_loader_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_num_workers</span> <span class="o">=</span> <span class="n">data_loader_spec</span><span class="o">.</span><span class="n">num_workers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_num_workers</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
+
+        <span class="c1"># first frame validity</span>
+        <span class="k">if</span> <span class="s1">&#39;first_frame_validity_fn&#39;</span> <span class="ow">in</span> <span class="n">data_loader_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="o">=</span> <span class="n">data_loader_spec</span><span class="o">.</span><span class="n">first_frame_validity_fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># data loader specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="o">=</span> <span class="n">data_loader_spec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">dirs</span><span class="o">.</span><span class="n">dataset_dir</span><span class="p">,</span> <span class="s1">&#39;containers/&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_cache_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">cache_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">window_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">window_size</span>
+        <span class="n">start_idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_idx</span>
+        <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># specs before pruning via containers_to_skip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">unpruned_sequence_lengths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">unpruned_num_sequences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span>
+
+        <span class="c1"># sequence lengths and windows per sequence</span>
+        <span class="k">if</span> <span class="s1">&#39;sequence_lengths&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># update sequences lengths</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span> <span class="o">=</span>\
+                    <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_compute_seq_len</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">containers_to_skip</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span> <span class="o">=</span>\
+                    <span class="nb">sum</span><span class="p">([</span><span class="n">sl</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">sl</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># new end idx following containers_to_skip pruning</span>
+        <span class="n">end_idx</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># compute num workers for each component</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_num_workers</span><span class="p">()</span>
+
+        <span class="c1"># custom init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_custom_init_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_init_fn</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_custom_init_fn</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_custom_init_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_dataset</span><span class="p">(</span><span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">)</span>
+
+        <span class="c1"># dummy batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_batch</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># counter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="c1"># Built-Ins #</span>
+    <span class="c1"># ----------#</span>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># Helpers #</span>
+    <span class="c1"># --------#</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_skip_cont</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">conts_to_skip</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">in</span> <span class="n">conts_to_skip</span> <span class="ow">or</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="n">conts_to_skip</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="n">conts_to_skip</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_compute_seq_len</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="n">conts_to_skip</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">in</span> <span class="n">conts_to_skip</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">sl</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">([</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span> <span class="ow">or</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">sl</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">conts_to_skip</span><span class="p">])</span>
+
+    <span class="c1"># Dataset in RAM #</span>
+    <span class="c1"># ---------------#</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_to_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">key_chain</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">encode</span><span class="p">())]]</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype_str</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype_str</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_load_container_filepaths_as_lists</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">,</span> <span class="n">starting_example</span><span class="p">,</span> <span class="n">ending_example</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;container dir &#39;</span> <span class="o">+</span> <span class="n">cont_dir</span> <span class="o">+</span> <span class="s1">&#39; does not exist&#39;</span><span class="p">)</span>
+
+        <span class="n">cont_filenames</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">)</span>
+        <span class="n">cont_filenames</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="n">cont_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cont_dir</span><span class="p">,</span> <span class="n">cont_filename</span><span class="p">)</span> <span class="k">for</span> <span class="n">cont_filename</span> <span class="ow">in</span> <span class="n">cont_filenames</span><span class="p">]</span>
+
+        <span class="n">grouped_conts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cont_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cont_path</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cont_paths</span><span class="p">):</span>
+            <span class="n">seq_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">cont_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">seq_id</span> <span class="o">&lt;</span> <span class="n">starting_example</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">seq_id</span> <span class="o">&gt;</span> <span class="n">ending_example</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">trimmed_string</span> <span class="o">=</span> <span class="n">cont_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">current_cont_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">)</span> <span class="k">if</span> <span class="nb">str</span><span class="o">.</span><span class="n">isdigit</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">)</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">trimmed_string</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">if</span> <span class="n">current_cont_num</span> <span class="o">!=</span> <span class="n">cont_num</span> <span class="ow">and</span> <span class="n">seq_id</span> <span class="o">!=</span> <span class="n">starting_example</span><span class="p">:</span>
+                <span class="n">cont_num</span> <span class="o">=</span> <span class="n">current_cont_num</span>
+                <span class="n">grouped_conts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cont_path</span><span class="p">)</span>
+        <span class="n">grouped_conts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grouped_conts</span>
+
+    <span class="k">def</span> <span class="nf">_get_containers_w_filepath_img_entries_as_tensor_slices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container_filepaths</span><span class="p">):</span>
+        <span class="c1"># noinspection PyUnusedLocal</span>
+        <span class="n">all_containers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loading containers into RAM...&#39;</span><span class="p">)</span>
+        <span class="n">num_seqs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">)</span>
+        <span class="n">max_seq_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">container_filepaths</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">container_filepaths</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">seq_idx</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;sequence </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">num_seqs</span><span class="p">))</span>
+            <span class="n">window_containers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">container</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">seq_len</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">filepath</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                    <span class="n">seq_len</span> <span class="o">-=</span> <span class="mi">1</span>
+                    <span class="k">break</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+                    <span class="n">container_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+                <span class="n">container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">(</span><span class="n">container_dict</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_tensor</span><span class="p">)</span>
+                <span class="n">window_containers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">container</span><span class="p">)</span>
+            <span class="n">window_containers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">container</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_seq_len</span> <span class="o">-</span> <span class="n">seq_len</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># padding for shorter sequences</span>
+            <span class="n">joined_window_containers</span> <span class="o">=</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">window_containers</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">all_containers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">joined_window_containers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_containers</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Multiprocessing Sizes #</span>
+    <span class="c1"># ----------------------#</span>
+
+    <span class="k">def</span> <span class="nf">_compute_num_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># init</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_num_workers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
+
+        <span class="c1"># prefetch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">prefetch</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">with_prefetching</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">num_workers</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">num_workers</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">prefetch</span><span class="p">)</span>
+
+        <span class="c1"># post processed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">post_processed</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># from numpy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">from_np</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># batched</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">batched</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># loaded data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">loaded_data</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">num_workers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">)</span>
+
+        <span class="c1"># ToDo: add multi-processing support for these lower level datasets</span>
+
+        <span class="c1"># shuffled</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">shuffled</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># unbatch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">unbatched</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># windowed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">windowed</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># valid first frames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">valid_first_frames</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># keychain pruned</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">keychain_pruned</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># parsed json</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">parsed_json</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># loaded json</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">loaded_json</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Dynamic Windowing #</span>
+    <span class="c1"># ------------------#</span>
+
+    <span class="k">def</span> <span class="nf">_update_seq_info_for_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seq_info</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">seq_info</span><span class="p">):</span>
+            <span class="k">return</span>
+        <span class="n">seq_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">seq_info</span><span class="o">.</span><span class="n">seq_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">seq_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">seq_info</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">new_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_seq_len</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">containers_to_skip</span><span class="p">)</span>
+        <span class="n">seq_info</span> <span class="o">=</span> <span class="n">seq_info</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">seq_info</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">seq_info</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">*</span> <span class="n">new_len</span>
+        <span class="k">return</span> <span class="n">seq_info</span>
+
+    <span class="k">def</span> <span class="nf">_group_tensor_into_windowed_tensor_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">seq_info</span><span class="p">):</span>
+        <span class="n">seq_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_seq_info_for_window</span><span class="p">(</span><span class="n">seq_info</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gather_idxs</span><span class="p">)),</span>
+                               <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_windows_in_seq</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">seq_info</span><span class="o">.</span><span class="n">length</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="n">window_idxs_in_seq</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)),</span>
+                                   <span class="p">(</span><span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">ivy</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">window_idxs_in_seq</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">gather_idxs_flat</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gather_idxs</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">*</span> <span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gather_idxs_flat</span><span class="p">),</span>
+                               <span class="p">(</span><span class="n">num_windows_in_seq</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">def</span> <span class="nf">_group_tensor_into_windowed_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">valid_first_frame</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame</span><span class="p">[:</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">valid_first_frame_pruned</span><span class="p">,</span> <span class="s1">&#39;int32&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">valid_first_frame_pruned</span> <span class="o">=</span>\
+                <span class="n">ivy</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="n">window_idxs_single</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">indices_where</span><span class="p">(</span><span class="n">valid_first_frame_pruned</span><span class="p">)</span>
+
+        <span class="n">gather_idxs_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">w_idx</span> <span class="ow">in</span> <span class="n">window_idxs_single</span><span class="p">:</span>
+            <span class="n">gather_idxs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">w_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="n">w_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">gather_idxs_list</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gather_idxs</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">num_valid_windows_for_seq</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">window_idxs_single</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gather_idxs</span><span class="p">),</span>
+                           <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">num_valid_windows_for_seq</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">]),</span> <span class="n">ivy</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]),</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_group_container_into_windowed_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_tensor_into_windowed_tensor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">container</span><span class="o">.</span><span class="n">valid_first_frame</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;seq_info&#39;</span> <span class="ow">in</span> <span class="n">container</span><span class="p">:</span>
+                <span class="n">seq_info</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">seq_info</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">seq_info</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_group_tensor_into_windowed_tensor_simple</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">seq_info</span><span class="p">))</span>
+
+    <span class="c1"># Dynamic File Reading #</span>
+    <span class="c1"># ---------------------#</span>
+
+    <span class="c1"># json to container</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_load_json_files</span><span class="p">(</span><span class="n">containers</span><span class="p">):</span>
+        <span class="n">read_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">j_fpath</span> <span class="ow">in</span> <span class="n">containers</span><span class="o">.</span><span class="n">fpaths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">j_fpath</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">j_fpath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">read_str</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">read_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">read_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">({</span><span class="s1">&#39;json_str&#39;</span><span class="p">:</span> <span class="n">read_files</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">_parse_json_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">containers</span><span class="p">):</span>
+        <span class="n">json_strings_stack</span> <span class="o">=</span> <span class="n">containers</span><span class="o">.</span><span class="n">json_str</span>
+        <span class="n">highest_idx_entry</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">containers</span><span class="o">.</span><span class="n">json_str</span> <span class="k">if</span> <span class="n">item</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">json_container_stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">Container</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_str</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_tensor</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                                <span class="k">if</span> <span class="n">json_str</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span> <span class="k">else</span>
+                                <span class="n">Container</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_strings_stack</span><span class="p">[</span><span class="n">highest_idx_entry</span><span class="p">]))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_to_tensor</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">json_str</span> <span class="ow">in</span> <span class="n">json_strings_stack</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">json_container_stack</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># container pruning</span>
+
+    <span class="k">def</span> <span class="nf">_prune_unused_key_chains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">prune_key_chains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">unused_key_chains</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">container</span>
+
+    <span class="c1"># arrays</span>
+
+    <span class="k">def</span> <span class="nf">_array_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">):</span>
+        <span class="n">conts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">filepaths_in_window</span><span class="p">:</span>
+            <span class="n">str_path</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">str_path</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">array_mode</span> <span class="o">==</span> <span class="s1">&#39;hdf5&#39;</span><span class="p">:</span>
+                <span class="n">cont</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">from_disk_as_hdf5</span><span class="p">(</span><span class="n">full_path</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">array_mode</span> <span class="o">==</span> <span class="s1">&#39;pickled&#39;</span><span class="p">:</span>
+                <span class="n">cont</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">from_disk_as_pickled</span><span class="p">(</span><span class="n">full_path</span> <span class="o">+</span> <span class="s1">&#39;.pickled&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;array_mode must be one of [ hdf5 | pickled ],&#39;</span>
+                                <span class="s1">&#39;but found </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">array_mode</span><span class="p">))</span>
+            <span class="n">conts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cont</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">conts</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># images</span>
+
+    <span class="k">def</span> <span class="nf">_uint8_img_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">):</span>
+        <span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">filepaths_in_window</span><span class="p">:</span>
+            <span class="n">str_path</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">str_path</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cv2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;in order to use _uint8_img_fn, opencv for python must be installed.&#39;</span>
+                                <span class="s1">&#39;To install opencv, run pip install opencv-python.&#39;</span><span class="p">)</span>
+            <span class="n">img_rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">load_gray_as_rgb</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Found an image with shape </span><span class="si">{}</span><span class="s1">, but load_gray_as_rgb is set to False.&#39;</span>
+                                    <span class="s1">&#39;Set this to True in order to tile grayscale images to RGB.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">img_rgb</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+                <span class="n">img_rgb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">img_rgb</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">img_rgb</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="mi">255</span>
+            <span class="n">imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_float_img_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">):</span>
+        <span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">filepaths_in_window</span><span class="p">:</span>
+            <span class="n">str_path</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">str_path</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cv2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;in order to use _float_img_fn, opencv for python must be installed.&#39;</span>
+                                <span class="s1">&#39;To install opencv, run pip install opencv-python.&#39;</span><span class="p">)</span>
+            <span class="n">img_rgba</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">img_rgba</span><span class="o">.</span><span class="n">tobytes</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">img_rgba</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_custom_img_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepaths_in_window</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+        <span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">filepaths_in_window</span><span class="p">:</span>
+            <span class="n">str_path</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+            <span class="n">full_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="n">str_path</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cv2</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;in order to use _custom_img_fn, opencv for python must be installed.&#39;</span>
+                                <span class="s1">&#39;To install opencv, run pip install opencv-python.&#39;</span><span class="p">)</span>
+            <span class="n">img_raw</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">full_path</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">img_raw</span><span class="p">)</span>
+            <span class="n">imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">img0</span> <span class="o">=</span> <span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">img0</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_array</span><span class="p">(</span><span class="n">img0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;custom image functions should either return an array or an ivy.Container instance,&#39;</span>
+                            <span class="s1">&#39;but found </span><span class="si">{}</span><span class="s1"> or type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">img0</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">img0</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">_str_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">key_chain</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">array_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">array_strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">array_str</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_array_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">float_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">float_strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">float_str</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_img_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">uint8_str</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">uint8_strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">uint8_str</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uint8_img_fn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">custom_img_strs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_img_strs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">custom_img_str</span> <span class="ow">in</span> <span class="n">custom_img_strs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">custom_img_str</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_custom_img_fn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_img_fns</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">custom_strs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_strs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">custom_str</span> <span class="ow">in</span> <span class="n">custom_strs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">custom_str</span> <span class="ow">in</span> <span class="n">key_chain</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_fns</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">_load_data_from_filepath_tensors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">container</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_str_fn</span><span class="p">)</span>
+
+    <span class="c1"># Dataset Creation #</span>
+    <span class="c1"># -----------------#</span>
+
+    <span class="k">def</span> <span class="nf">_get_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starting_example</span><span class="p">,</span> <span class="n">ending_example</span><span class="p">):</span>
+
+        <span class="k">class</span> <span class="nc">ContainerIdxMap</span><span class="p">:</span>
+
+            <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sizes</span><span class="p">,</span> <span class="n">fpath_template</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seq_idxs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_seq_len</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                         <span class="n">conts_to_skip</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pruned_sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                    <span class="n">pruned_sizes</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span>
+                        <span class="n">pruned_sizes</span><span class="p">,</span> <span class="p">[</span><span class="n">SeqDataLoader</span><span class="o">.</span><span class="n">_compute_seq_len</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="n">conts_to_skip</span><span class="p">)</span>
+                                       <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sl</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sizes</span><span class="p">)])</span>
+                    <span class="n">num_empty</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">ps</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="n">pruned_sizes</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">),</span>
+                                               <span class="n">sizes</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">]))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">),</span>
+                                                  <span class="n">pruned_sizes</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">]))</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span> <span class="o">=</span> <span class="n">sizes</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">pruned_sizes</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                        <span class="n">pruned_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                        <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span> <span class="ow">in</span> <span class="n">conts_to_skip</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">seq_idx</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pruned_dict</span><span class="p">:</span>
+                                <span class="n">pruned_dict</span><span class="p">[</span><span class="n">seq_idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+                            <span class="n">pruned_dict</span><span class="p">[</span><span class="n">seq_idx</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">win_idx</span><span class="p">)</span>
+                        <span class="n">pruned_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pruned_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                        <span class="n">pruned_sizes_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span> <span class="o">-</span> <span class="n">num_pruned</span>
+                                             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">num_pruned</span> <span class="ow">in</span> <span class="n">pruned_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                        <span class="n">num_empty</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">pruned_sizes_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()])</span>
+                        <span class="n">pruned_sizes</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span>
+                            <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span><span class="p">,</span> <span class="n">pruned_sizes_dict</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">num_empty</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">ps</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">ps</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid type for sizes, expected one of int, dict, tuple or list,&#39;</span>
+                                    <span class="s1">&#39;but found </span><span class="si">{}</span><span class="s1"> or type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">sizes</span><span class="p">)))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_constant_size</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">max_seq_len</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_len</span> <span class="o">=</span> <span class="n">max_seq_len</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_size</span> <span class="k">else</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fpath_template</span> <span class="o">=</span> <span class="n">fpath_template</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_conts_to_skip</span> <span class="o">=</span> <span class="n">conts_to_skip</span>
+                <span class="k">if</span> <span class="n">seq_idxs</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span> <span class="o">=</span> <span class="n">seq_idxs</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">))</span> <span class="k">if</span> <span class="n">pruned_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="n">keys</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">num_empty</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">vals</span><span class="p">))</span>
+
+            <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+                    <span class="n">seq_idxs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+                        <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span>
+                         <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">step</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))])</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="n">seq_idxs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="p">[</span><span class="n">slice_obj</span><span class="p">]})</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid type for slice_obj, expected either slice or int,&#39;</span>
+                                    <span class="s1">&#39;but found </span><span class="si">{}</span><span class="s1"> of type </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_size</span><span class="p">:</span>
+                    <span class="n">sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sizes</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">({</span><span class="n">seq_idx</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span><span class="p">[</span><span class="n">seq_idx</span><span class="p">]</span>
+                                                     <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="n">seq_idxs</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+                <span class="k">return</span> <span class="n">ContainerIdxMap</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fpath_template</span><span class="p">,</span> <span class="n">seq_idxs</span><span class="p">,</span> <span class="n">max_seq_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_len</span><span class="p">,</span>
+                                       <span class="n">conts_to_skip</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_conts_to_skip</span><span class="p">,</span> <span class="n">pruned_sizes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">mapped_idxs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">mapped_idxs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">mapped_idxs</span><span class="p">))</span>
+
+            <span class="k">def</span> <span class="nf">to_idxs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">seq_idxs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_size</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span><span class="p">[</span><span class="n">seq_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="n">seq_idxs</span><span class="p">]</span>
+                <span class="n">rets</span> <span class="o">=</span> <span class="p">[[(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">win_idx</span> <span class="ow">in</span>
+                         <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">SeqDataLoader</span><span class="o">.</span><span class="n">_skip_cont</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conts_to_skip</span><span class="p">)]</span>
+                        <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq_idxs</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)]</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="p">[(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rets</span> <span class="k">if</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="o">!=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]]</span>
+
+            <span class="k">def</span> <span class="nf">to_filepaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath_template</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;to_filepaths method is not valid if fpath_template has not been specified&#39;</span>
+                                    <span class="s1">&#39;in the constructor.&#39;</span><span class="p">)</span>
+                <span class="n">seq_idxs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seq_idxs</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constant_size</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_sizes</span><span class="p">[</span><span class="n">seq_idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="n">seq_idxs</span><span class="p">]</span>
+                <span class="n">rets</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">_fpath_template</span> <span class="o">%</span> <span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">)</span> <span class="k">for</span> <span class="n">win_idx</span> <span class="ow">in</span>
+                         <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">SeqDataLoader</span><span class="o">.</span><span class="n">_skip_cont</span><span class="p">(</span><span class="n">seq_idx</span><span class="p">,</span> <span class="n">win_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conts_to_skip</span><span class="p">)]</span>
+                        <span class="k">for</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">seq_idxs</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)]</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_seq_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">))</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rets</span> <span class="k">if</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pruned_sizes</span>
+
+        <span class="c1"># container filepaths</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">container_load_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;preload&#39;</span><span class="p">,</span> <span class="s1">&#39;dynamic&#39;</span><span class="p">]:</span>
+            <span class="n">fpath_template</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_container_data_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">cont_fname_template</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fpath_template</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">container_idx_map</span> <span class="o">=</span> <span class="n">ContainerIdxMap</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">unpruned_sequence_lengths</span><span class="p">,</span> <span class="n">fpath_template</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">starting_example</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="n">ending_example</span><span class="p">,</span> <span class="n">conts_to_skip</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">containers_to_skip</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">container_idx_map</span> <span class="o">=</span> <span class="n">container_idx_map</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">num_sequences</span><span class="p">]</span>
+
+        <span class="c1"># shuffle sequences</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">preshuffle_data</span><span class="p">:</span>
+            <span class="n">container_idx_map</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+
+        <span class="c1"># extract sequence lengths</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fixed_sequence_length</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">=</span>\
+                <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">container_idx_map</span><span class="p">)),</span>
+                                            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">container_idx_map</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="c1"># windowing values</span>
+            <span class="n">window_idxs_per_seq</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">gather_idxs_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">window_idxs_per_seq</span><span class="p">:</span>
+                <span class="n">gather_idxs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="n">gather_idxs</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">gather_idxs_list</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_gather_idxs</span> <span class="o">=</span> \
+                <span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gather_idxs</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_windows_per_seq</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span> <span class="o">=</span> <span class="n">container_idx_map</span><span class="o">.</span><span class="n">sizes</span>
+
+        <span class="c1"># maybe pre-load containers</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">container_load_mode</span> <span class="o">==</span> <span class="s1">&#39;preload&#39;</span><span class="p">:</span>
+            <span class="c1"># load containers with vector data and image filepath entries</span>
+            <span class="n">container_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_containers_w_filepath_img_entries_as_tensor_slices</span><span class="p">(</span>
+                <span class="n">container_idx_map</span><span class="o">.</span><span class="n">to_filepaths</span><span class="p">())</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">container_slices</span> <span class="o">=</span>\
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span><span class="p">(</span><span class="n">container_slices</span><span class="p">,</span> <span class="p">[</span><span class="n">ending_example</span> <span class="o">-</span> <span class="n">starting_example</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+
+            <span class="c1"># prune unwanted chains of keys</span>
+            <span class="k">if</span> <span class="s1">&#39;unused_key_chains&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+                <span class="n">container_slices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prune_unused_key_chains</span><span class="p">(</span><span class="n">container_slices</span><span class="p">)</span>
+
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">list_stack</span><span class="p">([</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">container_slices</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">container_slices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+                <span class="n">container_slices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_cache_size</span><span class="p">,</span>
+                <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">queue_timeout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">container_load_mode</span> <span class="o">==</span> <span class="s1">&#39;dynamic&#39;</span><span class="p">:</span>
+                <span class="c1"># load containers with filepath entries</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">({</span><span class="s1">&#39;fpaths&#39;</span><span class="p">:</span> <span class="n">container_idx_map</span><span class="p">}),</span>
+                                  <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+                                  <span class="nb">len</span><span class="p">(</span><span class="n">container_idx_map</span><span class="p">),</span>
+                                  <span class="n">trans_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cont</span><span class="p">:</span> <span class="n">cont</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x_</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">x_</span><span class="o">.</span><span class="n">to_filepaths</span><span class="p">()),</span>
+                                  <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_cache_size</span><span class="p">,</span>
+                                  <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">queue_timeout</span><span class="p">)</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;loaded_json&#39;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_load_json_files</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">loaded_json</span><span class="p">)</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;parsed_json&#39;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_parse_json_strings</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">parsed_json</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">({</span><span class="s1">&#39;idx_map&#39;</span><span class="p">:</span> <span class="n">container_idx_map</span><span class="p">}),</span>
+                                  <span class="s1">&#39;base&#39;</span><span class="p">,</span>
+                                  <span class="nb">len</span><span class="p">(</span><span class="n">container_idx_map</span><span class="p">),</span>
+                                  <span class="n">trans_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cont</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">custom_container_load_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cont</span><span class="p">),</span>
+                                  <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                  <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                  <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_cache_size</span><span class="p">,</span>
+                                  <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">queue_timeout</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;unused_key_chains&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;keychain_pruned&#39;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_prune_unused_key_chains</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">keychain_pruned</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;valid_first_frames&#39;</span><span class="p">,</span>
+                                      <span class="k">lambda</span> <span class="n">x_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_frame_validity_fn</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">valid_first_frames</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dataset_spec</span><span class="o">.</span><span class="n">sequence_lengths</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1"># ToDo: add other conditionals which make the loading more efficient if only one of the</span>
+            <span class="c1">#  above two conditions is True</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;windowed&#39;</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_group_container_into_windowed_container</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">windowed</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">unbatch</span><span class="p">(</span><span class="s1">&#39;unbatched&#39;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">unbatched</span><span class="p">,</span>
+                                      <span class="n">batch_sizes</span><span class="o">=</span><span class="p">[</span><span class="nb">max</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window_size</span> <span class="o">+</span> <span class="mi">1</span>
+                                                   <span class="k">for</span> <span class="n">seq_len</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_lengths</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">seq_len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">shuffle_buffer_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="s1">&#39;shuffled&#39;</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">shuffle_buffer_size</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">shuffled</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;loaded_data&#39;</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">_load_data_from_filepath_tensors</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">loaded_data</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="s1">&#39;batched&#39;</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_batch_size</span><span class="p">,</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">batched</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;from_np&#39;</span><span class="p">,</span>
+                              <span class="k">lambda</span> <span class="n">cont</span><span class="p">:</span> <span class="n">cont</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x_</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x_</span><span class="p">)),</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">from_np</span><span class="p">,</span>
+                              <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">post_proc_fn</span><span class="p">):</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="s1">&#39;post_processed&#39;</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">post_proc_fn</span><span class="p">,</span>
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">_num_workers</span><span class="o">.</span><span class="n">post_processed</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">with_prefetching</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="s1">&#39;prefetch&#39;</span><span class="p">)</span>
+        <span class="c1"># ToDo: find way to make pre-fetching to GPU actually pre-fetch, ideally using multi-processing.</span>
+        <span class="c1">#  For example, swapping prefetch and to_gpu ops around would work if to_gpu could accept self._num_workers.</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">to_dev</span><span class="p">(</span><span class="s1">&#39;to_dev&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">to_dev</span><span class="p">(</span><span class="s1">&#39;to_dev&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">to_devs</span><span class="p">(</span><span class="s1">&#39;to_devs&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">prefetch_to_devs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span>
+
+    <span class="c1"># Public Methods #</span>
+    <span class="c1"># ---------------#</span>
+
+<div class="viewcode-block" id="SeqDataLoader.get_next_batch"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader.get_next_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_iterator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SeqDataLoader.get_first_batch"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader.get_first_batch">[docs]</a>    <span class="k">def</span> <span class="nf">get_first_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_batch</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_batch</span></div>
+
+<div class="viewcode-block" id="SeqDataLoader.cycle_for_debugging"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader.cycle_for_debugging">[docs]</a>    <span class="k">def</span> <span class="nf">cycle_for_debugging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">cycle_for_debugging</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SeqDataLoader.close"><a class="viewcode-back" href="../../../data_loaders/seq_data_loader/SeqDataLoader.html#ivy_builder.data_loaders.seq_data_loader.SeqDataLoader.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

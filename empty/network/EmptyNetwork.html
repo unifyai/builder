@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data loader spec" href="../../specs/data_loader_spec.html" />
+    <link rel="next" title="Trainer" href="../trainer.html" />
     <link rel="prev" title="Network" href="../network.html" /> 
 </head>
 
@@ -80,20 +80,17 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul class="current">
@@ -102,6 +99,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">EmptyNetwork</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -109,16 +107,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -189,23 +180,23 @@
 <h1>EmptyNetwork<a class="headerlink" href="#emptynetwork" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="ivy_builder.empty.network.EmptyNetwork">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ivy_builder.empty.network.</span></code><code class="sig-name descname"><span class="pre">EmptyNetwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec" title="ivy_builder.specs.network_spec.NetworkSpec"><span class="pre">ivy_builder.specs.network_spec.NetworkSpec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">ivy_builder.empty.network.</code><code class="sig-name descname">EmptyNetwork</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">network_spec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec" title="ivy_builder.specs.network_spec.NetworkSpec">ivy_builder.specs.network_spec.NetworkSpec</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../../abstract/network/Network.html#ivy_builder.abstract.network.Network" title="ivy_builder.abstract.network.Network"><code class="xref py py-class docutils literal notranslate"><span class="pre">ivy_builder.abstract.network.Network</span></code></a></p>
 <dl class="py method">
 <dt id="ivy_builder.empty.network.EmptyNetwork.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network_spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec" title="ivy_builder.specs.network_spec.NetworkSpec"><span class="pre">ivy_builder.specs.network_spec.NetworkSpec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">network_spec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../../specs/network_spec/NetworkSpec.html#ivy_builder.specs.network_spec.NetworkSpec" title="ivy_builder.specs.network_spec.NetworkSpec">ivy_builder.specs.network_spec.NetworkSpec</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>base class for any networks to be used with this core tensorflow training repo</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="ivy_builder.empty.network.EmptyNetwork.call">
-<code class="sig-name descname"><span class="pre">call</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.call" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.call" title="Permalink to this definition">¶</a></dt>
 <dd><p>call a single forward pass of the network</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="ivy_builder.empty.network.EmptyNetwork.get_serializable_model">
-<code class="sig-name descname"><span class="pre">get_serializable_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shape</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.get_serializable_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.get_serializable_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_serializable_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_shape</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/ivy_builder/empty/network.html#EmptyNetwork.get_serializable_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.empty.network.EmptyNetwork.get_serializable_model" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -225,7 +216,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../specs/data_loader_spec.html" class="btn btn-neutral float-right" title="Data loader spec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../trainer.html" class="btn btn-neutral float-right" title="Trainer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../network.html" class="btn btn-neutral float-left" title="Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

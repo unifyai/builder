@@ -1,0 +1,21 @@
+Checkpoints
+===========
+
+.. automodule:: ivy_builder.checkpoints
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Checkpoints
+
+   checkpoints/Checkpoint:
+
+    def __init__.rst
+   checkpoints/CheckpointManager:
+
+    def __init__.rst
+

@@ -1,0 +1,17 @@
+Spec
+====
+
+.. automodule:: ivy_builder.specs.spec
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Spec
+
+   spec/locals_to_kwargs.rst
+   spec/Spec.rst
+

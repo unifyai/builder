@@ -78,25 +78,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/network_group.html">Network group</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../abstract/tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -104,16 +102,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -179,20 +170,31 @@
   <h1>Source code for ivy_builder.abstract.trainer</h1><div class="highlight"><pre>
 <span></span><span class="c1"># global</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">git</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="n">git</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">git</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
 <span class="c1"># local</span>
-<span class="kn">from</span> <span class="nn">ivy_builder.specs.trainer_spec</span> <span class="k">import</span> <span class="n">TrainerSpec</span>
-<span class="kn">from</span> <span class="nn">ivy_builder.abstract.data_loader</span> <span class="k">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">ivy_builder.abstract.network</span> <span class="k">import</span> <span class="n">Network</span>
-<span class="kn">from</span> <span class="nn">ivy_builder.builder</span> <span class="k">import</span> <span class="n">spec_to_dict</span><span class="p">,</span> <span class="n">save_dict_as_json</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.specs.trainer_spec</span> <span class="kn">import</span> <span class="n">TrainerSpec</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.abstract.data_loader</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.builder</span> <span class="kn">import</span> <span class="n">spec_to_dict</span><span class="p">,</span> <span class="n">trainer_to_spec_args_dict</span><span class="p">,</span> <span class="n">save_dict_as_json</span>
+<span class="kn">from</span> <span class="nn">ivy_builder.checkpoints</span> <span class="kn">import</span> <span class="n">Checkpoint</span><span class="p">,</span> <span class="n">CheckpointManager</span>
 
 <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">MIN_DENOMINATOR</span> <span class="o">=</span> <span class="mf">1e-12</span>
 
 
 <span class="k">def</span> <span class="nf">_get_valid_filepath</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">base_filename</span><span class="p">,</span> <span class="n">file_type</span><span class="p">):</span>
@@ -206,29 +208,310 @@
         <span class="k">return</span> <span class="n">filepath</span>
 
 
-<div class="viewcode-block" id="Trainer"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer">[docs]</a><span class="k">class</span> <span class="nc">Trainer</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="Trainer"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer">[docs]</a><span class="k">class</span> <span class="nc">Trainer</span><span class="p">:</span>
 
-<div class="viewcode-block" id="Trainer.__init__"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">TrainerSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Trainer.__init__"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec</span><span class="p">:</span> <span class="n">TrainerSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
         <span class="c1"># specification</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span> <span class="o">=</span> <span class="n">spec</span>
+
+        <span class="c1"># uninitialized variables</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="o">.</span><span class="n">starting_iteration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">starting_iteration</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># trainer variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># set seed</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">ivy</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="c1"># uninitialized variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># summary writer</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">torch.utils.tensorboard</span> <span class="kn">import</span> <span class="n">SummaryWriter</span>
+        <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+            <span class="n">SummaryWriter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">SummaryWriter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="n">SummaryWriter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;tnsrbrd&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># profiler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">steps_to_profile</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Profiler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># timing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+        <span class="c1"># batch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># network</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_network</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">network</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">spec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_partial_grad_updates</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span><span class="o">.</span><span class="n">v_keychains</span><span class="p">)</span>
+
+        <span class="c1"># multi-dev</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dev_str</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default_device</span><span class="p">(),</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">built</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Network must use either explicit or on_call build modes if training on multiple&#39;</span>
+                                <span class="s1">&#39;devices, but the network was already built using on_init method.&#39;</span><span class="p">)</span>
+            <span class="n">ret_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">ret</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">unify_iter</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">transpose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">dev_mapper</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">DevMapperMultiProc</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_map_fn</span><span class="p">),</span> <span class="n">ret_fn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">,</span>
+                <span class="n">constant</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;network&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev_mapper</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># device manager</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_device_allocation</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_splitting</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">DevManager</span><span class="p">(</span>
+                <span class="n">dev_mapper</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">,</span> <span class="n">tune_dev_alloc</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_device_allocation</span><span class="p">),</span>
+                <span class="n">tune_dev_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_splitting</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># compilation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># prevent already running processes from being pickled as sent to new processes</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_writer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_profiler&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_gpu_handles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_network&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_spec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state</span><span class="p">[</span><span class="s1">&#39;spec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">state</span>
+
+    <span class="c1"># Abstract #</span>
+    <span class="c1"># ---------#</span>
+
+    <span class="c1"># Private Methods #</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span> <span class="n">batch</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Device</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                      <span class="n">v</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute training cost from input batch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        compute learning rate, given global step</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_write_scalar_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+                                <span class="n">global_step</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        write scalar summaries to disk, ready for tensorboard viewing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_write_image_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Array</span><span class="p">,</span>
+                               <span class="n">global_step</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Variable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        write image summaries to disk, ready for tensorboard viewing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">_pre_init</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the trainer, called before checkpoints are loaded and the network is built. Optional function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_post_init</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the trainer, called after checkpoints are loaded and the network is built. Optional function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Getters #</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@_optimizer</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="c1"># Initialization #</span>
+    <span class="c1"># ---------------#</span>
+
+    <span class="k">def</span> <span class="nf">_init_checkpoint_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;chkpts&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span> <span class="o">=</span> <span class="n">Checkpoint</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="p">,</span> <span class="n">net</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span> <span class="o">=</span> <span class="n">CheckpointManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;chkpts&#39;</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span>
+                                                <span class="n">step_counter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_scalars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_time</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;time between logs&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_learning_rate</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;learning rate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_scalar_summaries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_log_nested</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nest</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">name_hierarchy</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;torch must be installed in order to use the file writer for tensorboard logging.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;global_vector_norm&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/global vector norm&#39;</span><span class="p">,</span>
+                                    <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">nest</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">global_norm</span><span class="o">=</span><span class="kc">True</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">nest</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">new_name_hierarchy</span> <span class="o">=</span> <span class="n">name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">k</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_nested</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="n">new_name_hierarchy</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;mean&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/mean&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;abs_mean&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/abs mean&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;var&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/var&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_var</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;abs_var&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/abs var&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_var</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;min&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/min&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_min</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;abs_min&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/abs min&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_min</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;max&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/max&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;abs_max&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/abs max&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)))),</span> <span class="n">global_step</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;vector_norm&#39;</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">new_name_hierarchy</span> <span class="o">+</span> <span class="s1">&#39;/vector norm&#39;</span><span class="p">,</span>
+                                            <span class="n">ivy</span><span class="o">.</span><span class="n">to_scalar</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">ivy</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_nested</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="s1">&#39;gradients&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_gradients</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_nested</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_variables</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_optimizer_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_state</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_nested</span><span class="p">(</span><span class="n">optimizer_state</span><span class="p">,</span> <span class="n">global_step</span><span class="p">,</span> <span class="s1">&#39;optimizer_state&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_optimizer_state</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;torch must be installed in order to use the file writer for tensorboard logging.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;memory/RAM/global/percent_used&#39;</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">percent_used_mem_on_dev</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="n">global_step</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;memory/RAM/local/percent_used&#39;</span><span class="p">,</span>
+                                <span class="n">ivy</span><span class="o">.</span><span class="n">percent_used_mem_on_dev</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">process_specific</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">global_step</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;gpu&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">ds_formatted</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;memory/</span><span class="si">{}</span><span class="s1">/global/percent_used&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ds_formatted</span><span class="p">),</span>
+                                    <span class="n">ivy</span><span class="o">.</span><span class="n">percent_used_mem_on_dev</span><span class="p">(</span><span class="n">ds</span><span class="p">),</span> <span class="n">global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_log_device_utilization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;torch must be installed in order to use the file writer for tensorboard logging.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_util/CPU&#39;</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">dev_util</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">),</span> <span class="n">global_step</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ds</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;gpu&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">ds_formatted</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_util/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ds_formatted</span><span class="p">),</span> <span class="n">ivy</span><span class="o">.</span><span class="n">dev_util</span><span class="p">(</span><span class="n">ds</span><span class="p">),</span> <span class="n">global_step</span><span class="p">)</span>
+
+    <span class="c1"># noinspection PyProtectedMember</span>
+    <span class="k">def</span> <span class="nf">_log_device_tuning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;torch must be installed in order to use the file writer for tensorboard logging.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Cannot log device manager tuning if the device manager does not exist.&#39;</span>
+                            <span class="s1">&#39;Please set either of the params: tune_device_allocation=True or tune_splitting=True&#39;</span><span class="p">)</span>
+
+        <span class="c1"># device allocation</span>
+        <span class="c1"># ToDo: log more useful tuning metrics here</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_device_allocation</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/device_alloc/tune_count&#39;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_da_tune_count</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/device_alloc/unit_tune_count&#39;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_unit_da_tune_count</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/device_alloc/step_time&#39;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_da_step_time</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ds</span><span class="p">,</span> <span class="n">split</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_dev_strs_da</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/device_alloc/split_sizes/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ds</span><span class="p">),</span> <span class="n">split</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+
+        <span class="c1"># per-device splitting</span>
+        <span class="c1"># ToDo: log more useful tuning metrics here</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">tune_splitting</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/splitting/tune_count&#39;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_ds_tune_count</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/splitting/step_time&#39;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_ds_step_time</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ds</span><span class="p">,</span> <span class="n">split</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">_dev_strs_ds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="s1">&#39;dev_tuning/splitting/split_factors/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ds</span><span class="p">),</span> <span class="n">split</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;network checkpoint saved @ step &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_save_spec_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="c1"># remove/create log dir</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">overwrite_log_dir</span><span class="p">:</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="c1"># write spec json</span>
+        <span class="c1"># create directory</span>
         <span class="n">spec_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;spec&#39;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">spec_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># write spec json</span>
         <span class="n">complete_spec_filepath</span> <span class="o">=</span> <span class="n">_get_valid_filepath</span><span class="p">(</span><span class="n">spec_dir</span><span class="p">,</span> <span class="s1">&#39;complete_spec&#39;</span><span class="p">,</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
-        <span class="n">spec_dict</span> <span class="o">=</span> <span class="n">spec_to_dict</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">spec_dict</span> <span class="o">=</span> <span class="n">spec_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">)</span>
         <span class="n">save_dict_as_json</span><span class="p">(</span><span class="n">spec_dict</span><span class="p">,</span> <span class="n">complete_spec_filepath</span><span class="p">)</span>
 
-        <span class="c1"># write general info</span>
+        <span class="c1"># write spec args json</span>
+        <span class="n">complete_spec_args_filepath</span> <span class="o">=</span> <span class="n">_get_valid_filepath</span><span class="p">(</span><span class="n">spec_dir</span><span class="p">,</span> <span class="s1">&#39;complete_spec_args&#39;</span><span class="p">,</span> <span class="s1">&#39;.json&#39;</span><span class="p">)</span>
+        <span class="n">spec_args_dict</span> <span class="o">=</span> <span class="n">trainer_to_spec_args_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">save_dict_as_json</span><span class="p">(</span><span class="n">spec_args_dict</span><span class="p">,</span> <span class="n">complete_spec_args_filepath</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_save_info_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">info_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">info_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">info_filepath</span> <span class="o">=</span> <span class="n">_get_valid_filepath</span><span class="p">(</span><span class="n">info_dir</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;.txt&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">git</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;no gitpython installation found, not saving git commit hash to disk. &#39;</span>
+                            <span class="s1">&#39;To install gitpython, run pip install gitpython.&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">repo</span> <span class="o">=</span> <span class="n">git</span><span class="o">.</span><span class="n">Repo</span><span class="p">(</span><span class="n">search_parent_directories</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">sha</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">head</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">hexsha</span>
@@ -240,134 +523,235 @@
                                   <span class="s1">&#39;git commit hash at time of execution:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
                                   <span class="n">sha</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">])</span>
 
-        <span class="c1"># uninitialized variables</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="kc">None</span></div>
+    <span class="k">def</span> <span class="nf">_initialize_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pre_init</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span><span class="o">.</span><span class="n">build_mode</span> <span class="o">==</span> <span class="s1">&#39;explicit&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="n">first_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">get_first_batch</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">dim_size</span> <span class="o">=</span> <span class="n">first_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># for on_call builds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">,</span> <span class="n">first_batch</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># compile</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">compile_graph</span><span class="p">:</span>
+            <span class="n">valid_modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">]</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">compile_graph</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">],</span> <span class="s1">&#39;invalid value for compile_graph, &#39;</span> \
+                                                                                <span class="s1">&#39;must be one of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">valid_modes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">compile_graph</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">compile_graph</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_spec</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_save_spec_to_disk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_save_info_to_disk</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_checkpoint_manager</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">checkpoint_path</span><span class="p">:</span>
+            <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt_manager</span><span class="o">.</span><span class="n">latest_checkpoint_fpath</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">ld_chkpt</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unable to load checkpoint, no checkpoint files found.&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">ld_chkpt</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;try&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loaded checkpoints from </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">))</span>
+            <span class="n">starting_iteration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;#--------------#</span><span class="se">\n</span><span class="s1"># MODEL LOADED #</span><span class="se">\n</span><span class="s1">#--------------#&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_post_init</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="n">starting_iteration</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span>
+            <span class="k">return</span> <span class="n">starting_iteration</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;#-------------#</span><span class="se">\n</span><span class="s1"># MODEL BUILT #</span><span class="se">\n</span><span class="s1">#-------------#&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_post_init</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">starting_iteration</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="c1"># Abstract #</span>
+    <span class="c1"># Training #</span>
     <span class="c1"># ---------#</span>
 
-    <span class="c1"># Private Methods #</span>
+    <span class="k">def</span> <span class="nf">_raw_execute_with_grads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">network_v</span><span class="p">):</span>
+        <span class="n">cost</span><span class="p">,</span> <span class="n">gradients</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">execute_with_gradients</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">network_v</span><span class="o">.</span><span class="n">set_at_key_chains</span><span class="p">(</span><span class="n">v</span><span class="p">)),</span>
+            <span class="n">network_v</span><span class="o">.</span><span class="n">at_key_chains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span><span class="o">.</span><span class="n">v_keychains</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">if</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span><span class="o">.</span><span class="n">keep_v_keychains</span> <span class="k">else</span>
+            <span class="n">network_v</span><span class="o">.</span><span class="n">prune_key_chains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_net_spec</span><span class="o">.</span><span class="n">v_keychains</span><span class="p">,</span> <span class="n">ignore_none</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cost</span><span class="p">,</span> <span class="n">gradients</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_compute_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        compute training cost from input batch</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_dev_manager_execute_with_grads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># ToDo: assign this function in constructor rather than performing checks on each training step</span>
+        <span class="n">dev_manager_exists</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">)</span>
+        <span class="n">tuned</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">dev_manager_exists</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">tuned</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="ow">and</span> <span class="n">tuned</span><span class="p">:</span>
+            <span class="n">network</span><span class="o">.</span><span class="n">compile_on_next_step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="ow">and</span> <span class="n">tuned</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="o">.</span><span class="n">compile_on_next_step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multi_dev</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">MultiDevContainer</span><span class="p">):</span>
+                    <span class="n">batch</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">to_multi_dev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">distributed</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;batch&quot;</span><span class="p">:</span> <span class="n">batch</span><span class="o">.</span><span class="n">at_devs</span><span class="p">()},</span>
+                                             <span class="n">to_clone</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;network_v&quot;</span><span class="p">:</span> <span class="n">network</span><span class="o">.</span><span class="n">v</span><span class="p">})</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_execute_with_grads</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch</span><span class="p">,</span> <span class="n">network</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="n">tune_step</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raw_execute_with_grads</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">dev_strs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch</span><span class="p">,</span> <span class="n">network</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">global_step</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        compute learning rate, given global step</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_optimizer_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="c1"># ToDo: consider moving this code to the ivy.Optimizer class</span>
+        <span class="k">if</span> <span class="s1">&#39;max_grad_val&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+            <span class="n">grads</span> <span class="o">=</span> <span class="n">grads</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">max_grad_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">max_grad_val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;max_grad_vector_norm&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="p">:</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">max_grad_vector_norm</span><span class="o">/</span><span class="p">(</span><span class="n">grads</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">(</span><span class="n">global_norm</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="n">MIN_DENOMINATOR</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">grads</span> <span class="o">=</span> <span class="n">grads</span> <span class="o">*</span> <span class="n">ratio</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">grads</span><span class="p">,</span> <span class="n">ignore_missing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_partial_grad_updates</span><span class="p">)</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_write_scalar_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">,</span>
-                                <span class="n">training_writer</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        write scalar summaries to disk, ready for tensorboard viewing</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_train_step_from_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="n">cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager_execute_with_grads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">cost</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">batch</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer_step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span><span class="p">)</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_write_image_summaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">:</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">network</span><span class="p">:</span> <span class="n">Network</span><span class="p">,</span> <span class="n">training_batch</span><span class="p">,</span>
-                               <span class="n">training_writer</span><span class="p">,</span> <span class="n">global_step</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        write image summaries to disk, ready for tensorboard viewing</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_train_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_output</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">batch</span><span class="p">,</span> <span class="n">cost</span><span class="p">,</span> <span class="n">new_v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_step_from_batch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">get_next_batch</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_partial_grad_updates</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">set_at_key_chains</span><span class="p">(</span><span class="n">new_v</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">new_v</span>
+        <span class="k">if</span> <span class="n">with_output</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">batch</span><span class="p">,</span> <span class="n">cost</span>
+        <span class="k">return</span> <span class="n">cost</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">repeat_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Run the training</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_data_load_and_train_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_mode</span><span class="p">,</span> <span class="n">log_scalars_on_this_it</span><span class="p">,</span> <span class="n">log_viz_on_this_it</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">get_next_batch</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">log_scalars_on_this_it</span> <span class="ow">or</span> <span class="n">log_viz_on_this_it</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_cost</span> <span class="o">=</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_train_step</span><span class="p">(</span><span class="n">with_output</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_total_cost</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_step</span><span class="p">()</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_initialize_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize model, possibly loading from checkpoint.</span>
-<span class="sd">        :return starting iteration</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vis_mode</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">total_iterations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_init_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initialize logger</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">starting_iteration</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">total_iterations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">total_iterations</span><span class="p">)</span>
 
-    <span class="c1"># Public Methods #</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Trainer.save_model"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.save_model">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saved_model_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        saved the model in saved model format, from the specified checkpoint</span>
-<span class="sd">        :param saved_model_path: path to save the new saved model</span>
-<span class="sd">        :param checkpoint_path: path of the network weights in checkpoint files</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span>
 
-<div class="viewcode-block" id="Trainer.save"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.save">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        save the network weights in checkpoint file</span>
-<span class="sd">        :param checkpoint_path: path of the checkpoint file for saving the weights</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+        <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+            <span class="n">vis_freq</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vis_freq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">vis_freq</span>
 
-<div class="viewcode-block" id="Trainer.restore"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.restore">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        restore the network weights from checkpoint file</span>
-<span class="sd">        :param checkpoint_path: path of the checkpoint file for loading the weights</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+        <span class="n">local_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="c1"># Getters #</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
 
-    <span class="nd">@property</span>
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        get scheduler</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span> <span class="ow">and</span> <span class="n">local_counter</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">profile_start_step</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-    <span class="c1"># Setters #</span>
-    <span class="c1"># --------#</span>
+            <span class="n">final_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_total_iterations</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">log_scalars</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">final_step</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_at_end</span><span class="p">))</span> \
+                          <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">log_freq</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">vis_mode</span>
+            <span class="n">log_viz</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="n">vis_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">final_step</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">vis_at_end</span><span class="p">))</span> \
+                      <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">vis_freq</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="n">save</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_freq</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="p">(</span><span class="n">final_step</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_at_end</span><span class="p">))</span> \
+                   <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">save_freq</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">vis_mode</span>
 
-    <span class="nd">@_optimizer</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">_optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        set scheduler</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_load_and_train_step</span><span class="p">(</span><span class="n">vis_mode</span><span class="p">,</span> <span class="n">log_scalars</span><span class="p">,</span> <span class="n">log_viz</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">log_scalars</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">try_use_compiled</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_log_scalars</span><span class="p">()</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">try_use_compiled</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">log_viz</span> <span class="ow">or</span> <span class="n">vis_mode</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">try_use_compiled</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_write_image_summaries</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_batch</span><span class="p">,</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">try_use_compiled</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">local_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">vis_mode</span><span class="p">:</span>
+                <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;press enter to visualise another example&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiling</span> <span class="ow">and</span> <span class="n">local_counter</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">profile_start_step</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">steps_to_profile</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_profiler</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span>
 
     <span class="c1"># Public Methods #</span>
     <span class="c1"># ---------------#</span>
 
-<div class="viewcode-block" id="Trainer.setup"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Trainer.save"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save the network weights and optimizer state in checkpoint file</span>
+<span class="sd">        :param checkpoint_path: path of the checkpoint file for saving the weights and optimizer state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">({</span><span class="s1">&#39;network&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_network</span><span class="o">.</span><span class="n">v</span><span class="p">,</span>
+                                    <span class="s1">&#39;optimizer&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizer</span><span class="o">.</span><span class="n">state</span><span class="p">})</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">checkpoint</span><span class="o">.</span><span class="n">to_disk_as_hdf5</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Trainer.restore"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">global_step</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        restore the network weights from checkpoint file</span>
+<span class="sd">        :param checkpoint_path: path of the checkpoint file for loading the weights</span>
+<span class="sd">        :param global_step: training step to start at for continued training</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chkpt</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">global_step</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span> <span class="o">=</span> <span class="n">global_step</span></div>
+
+<div class="viewcode-block" id="Trainer.setup"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        setup the trainer, ready for training</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_model</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_init_logger</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_starting_iteration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_model</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Trainer.train"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">repeat_run</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Trainer.train"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">total_iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        run the trainer, returning the iteration step reached</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="p">,</span> <span class="n">repeat_run</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">starting_iteration</span><span class="p">,</span> <span class="n">total_iterations</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Trainer.visualize"><a class="viewcode-back" href="../../../abstract/trainer/Trainer.html#ivy_builder.abstract.trainer.Trainer.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="Trainer.visualize"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.visualize">[docs]</a>    <span class="k">def</span> <span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        run the trainer, but without weight optimization. Only used for tensorboard visualization</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_train</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Trainer.close"><a class="viewcode-back" href="../../../abstract/trainer.html#ivy_builder.abstract.trainer.Trainer.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close this trainer, and destroy all child objects or processes which may not be garbage collected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="o">.</span><span class="fm">__del__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span><span class="o">.</span><span class="n">data_loader</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+    <span class="c1"># Getters #</span>
+    <span class="c1"># --------#</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">learning_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_learning_rate_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_global_step</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spec</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">moving_average_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_moving_average_loss</span></div>
 </pre></div>
 
            </div>

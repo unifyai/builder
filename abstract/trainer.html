@@ -35,8 +35,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Trainer" href="trainer/Trainer.html" />
-    <link rel="prev" title="Network" href="network/Network.html" /> 
+    <link rel="next" title="Tuner" href="tuner.html" />
+    <link rel="prev" title="NetworkGroup" href="network_group/NetworkGroup.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -80,28 +80,25 @@
               
             
             
-              <p class="caption"><span class="caption-text">Guides</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../why_ivy.html">Why Ivy?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../using_ivy.html">Using Ivy</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Abstract</span></p>
+              <p class="caption"><span class="caption-text">Abstract</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="network.html">Network</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Trainer</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="trainer/Trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network_group.html">Network group</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Trainer</a><ul class="simple">
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tuner.html">Tuner</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Data loaders</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../data_loaders/tf_data_loader.html">Tf data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_loaders/seq_data_loader.html">Seq data loader</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Empty</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../empty/data_loader.html">Data loader</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../empty/trainer.html">Trainer</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Specs</span></p>
 <ul>
@@ -109,16 +106,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../specs/dataset_dirs.html">Dataset dirs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/dataset_spec.html">Dataset spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specs/spec.html">Spec</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../specs/trainer_spec.html">Trainer spec</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Docs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../ivy"">Ivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mech"">Ivy Mech</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../vision"">Ivy Vision</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../robot"">Ivy Robot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../memory"">Ivy Memory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../gym"">Ivy Gym</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../specs/tuner_spec.html">Tuner spec</a></li>
 </ul>
 
             
@@ -187,61 +177,71 @@
 <span id="trainer"></span><h1>Trainer<a class="headerlink" href="#module-ivy_builder.abstract.trainer" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="ivy_builder.abstract.trainer.Trainer">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ivy_builder.abstract.trainer.</span></code><code class="sig-name descname"><span class="pre">Trainer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec"><span class="pre">ivy_builder.specs.trainer_spec.TrainerSpec</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">ivy_builder.abstract.trainer.</code><code class="sig-name descname">Trainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec">ivy_builder.specs.trainer_spec.TrainerSpec</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt id="ivy_builder.abstract.trainer.Trainer.__init__">
-<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec"><span class="pre">ivy_builder.specs.trainer_spec.TrainerSpec</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spec</span><span class="p">:</span> <span class="n"><a class="reference internal" href="../specs/trainer_spec/TrainerSpec.html#ivy_builder.specs.trainer_spec.TrainerSpec" title="ivy_builder.specs.trainer_spec.TrainerSpec">ivy_builder.specs.trainer_spec.TrainerSpec</a></span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="ivy_builder.abstract.trainer.Trainer.save_model">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">save_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">saved_model_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.save_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>saved the model in saved model format, from the specified checkpoint
-:param saved_model_path: path to save the new saved model
-:param checkpoint_path: path of the network weights in checkpoint files</p>
+<dt id="ivy_builder.abstract.trainer.Trainer.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close this trainer, and destroy all child objects or processes which may not be garbage collected.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainer.Trainer.learning_rate">
+<em class="property">property </em><code class="sig-name descname">learning_rate</code><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainer.Trainer.moving_average_loss">
+<em class="property">property </em><code class="sig-name descname">moving_average_loss</code><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.moving_average_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.abstract.trainer.Trainer.restore">
+<code class="sig-name descname">restore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint_path</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">global_step</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>restore the network weights from checkpoint file
+:param checkpoint_path: path of the checkpoint file for loading the weights
+:param global_step: training step to start at for continued training</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="ivy_builder.abstract.trainer.Trainer.save">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>save the network weights in checkpoint file
-:param checkpoint_path: path of the checkpoint file for saving the weights</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="ivy_builder.abstract.trainer.Trainer.restore">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">restore</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.restore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>restore the network weights from checkpoint file
-:param checkpoint_path: path of the checkpoint file for loading the weights</p>
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the network weights and optimizer state in checkpoint file
+:param checkpoint_path: path of the checkpoint file for saving the weights and optimizer state</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="ivy_builder.abstract.trainer.Trainer.setup">
-<code class="sig-name descname"><span class="pre">setup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.setup" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>setup the trainer, ready for training</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="ivy_builder.abstract.trainer.Trainer.spec">
+<em class="property">property </em><code class="sig-name descname">spec</code><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.spec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="ivy_builder.abstract.trainer.Trainer.train">
-<code class="sig-name descname"><span class="pre">train</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">starting_iteration</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repeat_run</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.train" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">train</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">starting_iteration</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">total_iterations</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>run the trainer, returning the iteration step reached</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="ivy_builder.abstract.trainer.Trainer.visualize">
-<code class="sig-name descname"><span class="pre">visualize</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.visualize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">visualize</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/ivy_builder/abstract/trainer.html#Trainer.visualize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.abstract.trainer.Trainer.visualize" title="Permalink to this definition">¶</a></dt>
 <dd><p>run the trainer, but without weight optimization. Only used for tensorboard visualization</p>
 </dd></dl>
 
 </dd></dl>
 
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Trainer</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="trainer/Trainer.html">Trainer</a></li>
-</ul>
 </div>
 </div>
 
@@ -253,10 +253,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="trainer/Trainer.html" class="btn btn-neutral float-right" title="Trainer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tuner.html" class="btn btn-neutral float-right" title="Tuner" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="network/Network.html" class="btn btn-neutral float-left" title="Network" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="network_group/NetworkGroup.html" class="btn btn-neutral float-left" title="NetworkGroup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ivy_builder.dataset &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/network_group.html">Network group</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../abstract/tuner.html">Tuner</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../data_loaders/seq_data_loader.html">Seq data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../empty/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/spec.html">Spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/trainer_spec.html">Trainer spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../specs/tuner_spec.html">Tuner spec</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>ivy_builder.dataset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ivy_builder.dataset</h1><div class="highlight"><pre>
+<span></span><span class="c1"># global</span>
+<span class="kn">import</span> <span class="nn">ivy</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">queue</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="multiprocessing"><a class="viewcode-back" href="../../dataset/multiprocessing.html#ivy_builder.dataset.multiprocessing">[docs]</a><span class="k">def</span> <span class="nf">multiprocessing</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">torch.multiprocessing</span> <span class="k">as</span> <span class="nn">multiproc</span>
+    <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">multiproc</span>
+    <span class="k">return</span> <span class="n">multiproc</span></div>
+
+
+<div class="viewcode-block" id="LoggedDatasetException"><a class="viewcode-back" href="../../dataset/LoggedDatasetException.html#ivy_builder.dataset.LoggedDatasetException">[docs]</a><span class="k">class</span> <span class="nc">LoggedDatasetException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="EmptyDatasetException"><a class="viewcode-back" href="../../dataset/EmptyDatasetException.html#ivy_builder.dataset.EmptyDatasetException">[docs]</a><span class="k">class</span> <span class="nc">EmptyDatasetException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="c1"># noinspection PyMissingConstructor</span>
+<div class="viewcode-block" id="Cache"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Cache">[docs]</a><span class="k">class</span> <span class="nc">Cache</span><span class="p">:</span>
+    
+<div class="viewcode-block" id="Cache.__init__"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Cache.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_size</span> <span class="o">=</span> <span class="n">max_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div>
+        
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_size</span><span class="p">:</span>
+            <span class="n">key_to_del</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_used_keys</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">key_to_del</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+        
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span></div>
+
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Dataset.__init__"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">base_slice_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trans_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slice_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_caching</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">prefetching</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">queue_timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subprocess_depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_slice_fn_arg</span> <span class="o">=</span> <span class="n">base_slice_fn</span>
+        <span class="k">if</span> <span class="n">base_slice_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_base_slice_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_base_slice_fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_base_slice_fn</span> <span class="o">=</span> <span class="n">base_slice_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trans_fn</span> <span class="o">=</span> <span class="n">trans_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_slice_fn</span> <span class="o">=</span> <span class="n">slice_fn</span>
+        <span class="k">if</span> <span class="n">slice_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_slice_dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_slice_fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_slice_dataset</span> <span class="o">=</span> <span class="n">slice_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_elementwise_query_fn</span> <span class="o">=</span> <span class="n">elementwise_query_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span> <span class="o">=</span> <span class="n">with_caching</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span> <span class="o">=</span> <span class="n">cache_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">cache_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="p">()</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="k">if</span> <span class="n">num_processes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">num_processes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="o">=</span> <span class="n">numpy_loading</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefetching</span> <span class="o">=</span> <span class="n">prefetching</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">queue_timeout</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">queue_timeout</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subprocess_depth</span> <span class="o">=</span> <span class="n">subprocess_depth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_subprocess</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">subprocess_depth</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_pass</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue_offset</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+
+            <span class="k">def</span> <span class="nf">to_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_array</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">is_array</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">x</span>
+
+            <span class="n">base_dataset</span> <span class="o">=</span> <span class="n">base_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">to_numpy</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span> <span class="o">=</span> <span class="n">base_dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workers_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_workers</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1"># Private #</span>
+    <span class="c1"># --------#</span>
+
+    <span class="k">def</span> <span class="nf">_deep_copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># noinspection PyProtectedMember</span>
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span>
+            <span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="o">.</span><span class="n">_deep_copy</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+            <span class="n">base_slice_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_slice_fn_arg</span><span class="p">,</span> <span class="n">trans_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trans_fn</span><span class="p">,</span> <span class="n">slice_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_slice_fn</span><span class="p">,</span>
+            <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_elementwise_query_fn</span><span class="p">,</span> <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+            <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="n">ivy</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">num_processes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span><span class="p">),</span>
+            <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">,</span> <span class="n">prefetching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_prefetching</span><span class="p">,</span> <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">,</span>
+            <span class="n">subprocess_depth</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_subprocess_depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_initialize_all_workers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># noinspection PyProtectedMember</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="o">.</span><span class="n">_initialize_all_workers</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_workers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_slice_queues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_output_queues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span><span class="p">):</span>
+                <span class="n">dataset_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deep_copy</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">multiproc</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="p">()</span>
+                <span class="n">index_queue</span> <span class="o">=</span> <span class="n">multiproc</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+                <span class="n">output_queue</span> <span class="o">=</span> <span class="n">multiproc</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+                <span class="n">worker</span> <span class="o">=</span> <span class="n">multiproc</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+                    <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_worker_fn</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">index_queue</span><span class="p">,</span> <span class="n">output_queue</span><span class="p">,</span> <span class="n">dataset_copy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">))</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_slice_queues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index_queue</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_output_queues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_queue</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_workers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">worker</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_has_workers</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_workers_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_slice_dataset_with_error_checks</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">,</span> <span class="n">log_working_slice</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">trans_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">slice_obj</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">log_working_slice</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ret</span>
+            <span class="n">is_cont</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span>
+            <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;cont&#39;</span> <span class="k">if</span> <span class="n">is_cont</span> <span class="k">else</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">is_cont</span> <span class="ow">and</span> <span class="n">trans_fn</span><span class="p">:</span>
+                <span class="n">ret</span> <span class="o">=</span> <span class="n">trans_fn</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">shape</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">ret</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> dataset </span><span class="si">{}</span><span class="s1"> is empty&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">EmptyDatasetException</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> dataset </span><span class="si">{}</span><span class="s1"> was empty&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">))</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> dataset </span><span class="si">{}</span><span class="s1"> succeeded, producing container:</span><span class="se">\n</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">dataset_name</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">,</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">remove_print_limit</span><span class="p">()))</span>
+        <span class="k">except</span> <span class="n">LoggedDatasetException</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">is_cont</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span>
+            <span class="n">dataset_name</span> <span class="o">=</span> <span class="s1">&#39;cont&#39;</span> <span class="k">if</span> <span class="n">is_cont</span> <span class="k">else</span> <span class="n">dataset</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> dataset </span><span class="si">{}</span><span class="s1"> failed&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_cont</span><span class="p">:</span>
+                <span class="c1"># noinspection PyProtectedMember</span>
+                <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset_with_error_checks</span><span class="p">(</span>
+                    <span class="n">dataset</span><span class="o">.</span><span class="n">_base_dataset</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_base_slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">_trans_fn</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">EmptyDatasetException</span><span class="p">):</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;traceback for </span><span class="si">{}</span><span class="s1"> dataset </span><span class="si">{}</span><span class="s1"> failure:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">raise</span> <span class="n">LoggedDatasetException</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_worker_fn</span><span class="p">(</span><span class="n">index_queue</span><span class="p">,</span> <span class="n">output_queue</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">slice_obj</span> <span class="o">=</span> <span class="n">index_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">slice_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dataset</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="n">numpy_loading</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">set_framework</span><span class="p">(</span><span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset_with_error_checks</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">numpy_loading</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">unset_framework</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">wrapped_mode</span><span class="p">():</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">to_native</span><span class="p">(</span><span class="n">nested</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">output_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_empty_queue</span><span class="p">(</span><span class="n">queue_in</span><span class="p">):</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">queue_in</span><span class="o">.</span><span class="n">get_nowait</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
+                <span class="k">break</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_int</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">-</span> <span class="n">val</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_ensure_number_is_int</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="n">val_rounded</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">val_rounded</span> <span class="o">-</span> <span class="n">val</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Trying to slice ivy Container with non-integer slice </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_rounded</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_slice_dataset</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="n">slice_obj</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_ensure_number_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">so_start</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_ensure_number_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+                <span class="n">so_stop</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_ensure_number_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">so_step</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">so_step</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_ensure_number_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+                <span class="n">slice_obj</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start</span><span class="p">,</span> <span class="n">so_stop</span><span class="p">,</span> <span class="n">so_step</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset_with_error_checks</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset_with_error_checks</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_default_base_slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="n">slice_obj</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">slice_obj</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_default_slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">sliced_dataset</span><span class="p">,</span> <span class="n">dataset_size</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="n">slice_obj</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">&gt;</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">:</span>
+                <span class="n">slice_size</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">slice_size</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">+</span> <span class="n">dataset_size</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+            <span class="n">slice_obj</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">slice_size</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">sliced_dataset</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_base_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="n">base_slice_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
+        <span class="n">base_dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trans_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elementwise_query_fn</span><span class="p">:</span>
+                <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_trans_fn</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+                <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">list_stack</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trans_fn</span><span class="p">(</span><span class="n">base_dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">base_dataset</span>
+
+    <span class="k">def</span> <span class="nf">_get_item_from_slice_objs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_slice_obj</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">list_join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_base_item</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_item</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_base_item</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_wrap_slice_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">slice_obj</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">so_start_orig</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+            <span class="n">so_stop_orig</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span>
+            <span class="n">so_start_wrapped</span> <span class="o">=</span> <span class="n">so_start_orig</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">so_stop_orig</span> <span class="o">-</span> <span class="n">so_start_orig</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start_wrapped</span><span class="p">,</span> <span class="n">so_start_wrapped</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">so_stop_wrapped</span> <span class="o">=</span> <span class="n">so_stop_orig</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">so_stop_wrapped</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">so_stop_wrapped</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">+</span> <span class="n">so_stop_wrapped</span>
+            <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start_wrapped</span><span class="p">,</span> <span class="n">so_stop_wrapped</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_wrap_base_slice_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">slice_obj</span>
+        <span class="k">elif</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">&lt;</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">:</span>
+            <span class="n">end_idx_0</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+            <span class="n">slice_obj_0</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">end_idx_0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">start_idx_1</span> <span class="o">=</span> <span class="n">end_idx_0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+            <span class="n">slice_obj_1</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start_idx_1</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">slice_obj_0</span><span class="p">,</span> <span class="n">slice_obj_1</span>
+        <span class="k">return</span> <span class="n">slice_obj</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_split_slice_obj</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">slice_obj</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[(</span><span class="kc">True</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[(</span><span class="kc">False</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)]</span>
+        <span class="n">slice_objs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="mf">1.</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">start</span><span class="p">:</span>
+                    <span class="n">slice_objs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">False</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+                <span class="n">slice_objs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">True</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">:</span>
+            <span class="n">slice_objs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="kc">False</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">slice_objs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="kc">False</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">slice_objs</span>
+
+    <span class="k">def</span> <span class="nf">_add_to_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">so</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">so</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">so</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">so</span><span class="o">.</span><span class="n">stop</span><span class="o">-</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1.</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">so</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_item_after_cache_n_wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="n">base_slice_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_base_slice_obj</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_from_slice_objs</span><span class="p">(</span><span class="n">base_slice_obj</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="n">slice_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wrap_slice_obj</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
+        <span class="n">split_slice_objs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_slice_obj</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">)</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">items_for_cache</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">sos_for_cache</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">from_cache</span><span class="p">,</span> <span class="n">so</span> <span class="ow">in</span> <span class="n">split_slice_objs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">from_cache</span><span class="p">:</span>
+                <span class="n">so_key</span> <span class="o">=</span> <span class="n">so</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span> <span class="k">else</span> <span class="n">so</span><span class="o">.</span><span class="n">start</span>
+                <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="p">[</span><span class="n">so_key</span><span class="p">])</span>
+                <span class="k">continue</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item_after_cache_n_wrap</span><span class="p">(</span><span class="n">so</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">:</span>
+                <span class="n">sos_for_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">so</span><span class="p">)</span>
+                <span class="n">items_for_cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">so</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sos_for_cache</span><span class="p">,</span> <span class="n">items_for_cache</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_cache</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">])</span>
+        <span class="n">items_as_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">list_join</span><span class="p">(</span><span class="n">items_as_lists</span><span class="p">)</span>
+
+    <span class="c1"># Public #</span>
+    <span class="c1"># -------#</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slice_obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workers_initialized</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_all_workers</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">:</span>
+            <span class="n">ivy</span><span class="o">.</span><span class="n">set_framework</span><span class="p">(</span><span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">unset_framework</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_pass</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="n">slice_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+        <span class="n">num_sub_slices</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">slice_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span><span class="p">)</span>
+        <span class="n">slice_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">num_sub_slices</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">slice_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">slice_points</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">slice_points</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="ow">and</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_is_int</span><span class="p">(</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">):</span>
+            <span class="n">slice_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">slice_points</span><span class="p">)</span>
+        <span class="n">sub_slices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">slice_points</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">slice_points</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span> <span class="mf">1.</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_sub_slices</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefetching</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue_offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_offset</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue_offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span><span class="p">)</span>
+        <span class="n">q_idxs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_offset</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sub_slices</span><span class="p">))]</span>
+        <span class="n">slice_queues</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_slice_queues</span><span class="p">[</span><span class="n">qi</span><span class="p">]</span> <span class="k">for</span> <span class="n">qi</span> <span class="ow">in</span> <span class="n">q_idxs</span><span class="p">]</span>
+        <span class="n">output_queues</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_queues</span><span class="p">[</span><span class="n">qi</span><span class="p">]</span> <span class="k">for</span> <span class="n">qi</span> <span class="ow">in</span> <span class="n">q_idxs</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prefetching</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_pass</span><span class="p">:</span>
+                <span class="p">[</span><span class="n">slice_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">sub_slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">slice_queue</span><span class="p">,</span> <span class="n">sub_slice</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">slice_queues</span><span class="p">,</span> <span class="n">sub_slices</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">slice_queues</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">sub_slices</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">unset_framework</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_pass</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">queues</span><span class="o">=</span><span class="n">output_queues</span><span class="p">,</span> <span class="n">queue_load_sizes</span><span class="o">=</span><span class="n">slice_sizes</span><span class="p">,</span> <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="p">[</span><span class="n">slice_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">sub_slice</span><span class="p">)</span> <span class="k">for</span> <span class="n">slice_queue</span><span class="p">,</span> <span class="n">sub_slice</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">slice_queues</span><span class="p">,</span> <span class="n">sub_slices</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">wrapped_mode</span><span class="p">():</span>
+                <span class="n">items_as_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">output_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">))</span><span class="o">.</span><span class="n">to_ivy</span><span class="p">()</span>
+                                  <span class="k">for</span> <span class="n">output_queue</span> <span class="ow">in</span> <span class="n">output_queues</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">items_as_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">output_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">))</span>
+                                  <span class="k">for</span> <span class="n">output_queue</span> <span class="ow">in</span> <span class="n">output_queues</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span><span class="p">:</span>
+                <span class="n">ivy</span><span class="o">.</span><span class="n">unset_framework</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_pass</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="o">.</span><span class="n">list_join</span><span class="p">(</span><span class="n">items_as_lists</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Dataset.map"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.map">[docs]</a>    <span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">map_func</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">base_slice_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+                       <span class="n">base_slice_fn</span><span class="o">=</span><span class="n">base_slice_fn</span><span class="p">,</span>
+                       <span class="n">trans_fn</span><span class="o">=</span><span class="n">map_func</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.batch"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.batch">[docs]</a>    <span class="k">def</span> <span class="nf">batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">batch_array</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">ivy</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">batch_size</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">batch_size</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]],</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">batch_size</span><span class="p">))]</span>
+
+        <span class="k">def</span> <span class="nf">batch_cont</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">cont</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">batch_array</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">base_slice_fn</span><span class="p">(</span><span class="n">slc_obj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slc_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="n">base_slice_obj</span> <span class="o">=</span>\
+                    <span class="nb">slice</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">slc_obj</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">slc_obj</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">)),</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">so_start</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">slc_obj</span><span class="o">.</span><span class="n">start</span><span class="p">))</span>
+                <span class="n">so_stop</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">batch_size</span> <span class="o">*</span> <span class="n">slc_obj</span><span class="o">.</span><span class="n">stop</span><span class="p">))</span>
+                <span class="n">base_slice_obj</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start</span><span class="p">,</span> <span class="n">so_stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">base_slice_obj</span>
+
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">/</span> <span class="n">batch_size</span><span class="p">),</span>
+                       <span class="n">base_slice_fn</span><span class="o">=</span><span class="n">base_slice_fn</span><span class="p">,</span>
+                       <span class="n">trans_fn</span><span class="o">=</span><span class="n">batch_cont</span><span class="p">,</span>
+                       <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span> <span class="o">/</span> <span class="n">batch_size</span><span class="p">)),</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.unbatch"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.unbatch">[docs]</a>    <span class="k">def</span> <span class="nf">unbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_sizes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="n">unbatch_slice_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">slice_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">size_so_far</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">batch_sizes</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">batch_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">batch_sizes</span><span class="p">]</span><span class="o">*</span><span class="n">size</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">batch_sizes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">data_size</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data_size</span> <span class="o">=</span> <span class="n">batch_sizes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">size</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">data_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">data_size</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">))))</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">data_size</span><span class="p">):</span>
+                <span class="n">unbatch_slice_dict</span><span class="p">[</span><span class="n">size_so_far</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">slice_dict</span><span class="p">[</span><span class="n">size_so_far</span> <span class="o">+</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="n">size_so_far</span> <span class="o">+=</span> <span class="n">data_size</span>
+        <span class="n">unrolled_size</span> <span class="o">=</span> <span class="n">size_so_far</span>
+
+        <span class="k">def</span> <span class="nf">base_slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="n">slice_obj</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">slice_obj</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">so_start</span> <span class="o">=</span> <span class="n">unbatch_slice_dict</span><span class="p">[</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">]</span>
+            <span class="n">so_stop</span> <span class="o">=</span> <span class="n">unbatch_slice_dict</span><span class="p">[</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">so_stop</span> <span class="o">=</span> <span class="n">so_stop</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">so_stop</span> <span class="o">==</span> <span class="n">so_start</span> <span class="k">else</span> <span class="n">so_stop</span>
+            <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start</span><span class="p">,</span> <span class="n">so_stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">unbatch_fn</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">cont</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">kc</span><span class="p">:</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ivy</span><span class="o">.</span><span class="n">unstack</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">o</span><span class="p">])</span>
+
+        <span class="k">def</span> <span class="nf">slice_fn</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">sliced_dataset</span><span class="p">,</span> <span class="n">dataset_size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slice_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">slice_dict</span><span class="p">[</span><span class="n">slice_obj</span><span class="p">],</span> <span class="n">sliced_dataset</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">&gt;</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">:</span>
+                    <span class="n">slice_size</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">slice_size</span> <span class="o">=</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">+</span> <span class="n">unrolled_size</span> <span class="o">-</span> <span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span>
+                <span class="n">so_start</span> <span class="o">=</span> <span class="n">slice_dict</span><span class="p">[</span><span class="n">slice_obj</span><span class="o">.</span><span class="n">start</span><span class="p">]</span>
+                <span class="n">so_stop</span> <span class="o">=</span> <span class="n">so_start</span> <span class="o">+</span> <span class="n">slice_size</span>
+                <span class="n">so</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start</span><span class="p">,</span> <span class="n">so_stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">Dataset</span><span class="o">.</span><span class="n">_slice_dataset</span><span class="p">(</span><span class="n">so</span><span class="p">,</span> <span class="n">sliced_dataset</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="n">unrolled_size</span><span class="p">,</span>
+                       <span class="n">base_slice_fn</span><span class="o">=</span><span class="n">base_slice_fn</span><span class="p">,</span>
+                       <span class="n">trans_fn</span><span class="o">=</span><span class="n">unbatch_fn</span><span class="p">,</span>
+                       <span class="n">slice_fn</span><span class="o">=</span><span class="n">slice_fn</span><span class="p">,</span>
+                       <span class="n">elementwise_query_fn</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span> <span class="o">*</span> <span class="n">unrolled_size</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">))</span>
+                       <span class="k">if</span> <span class="n">cache_size</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">cache_size</span><span class="p">,</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.shuffle"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.shuffle">[docs]</a>    <span class="k">def</span> <span class="nf">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">shuffle_buffer_size</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">shuffle_buffer_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">def</span> <span class="nf">cont_shuffle_fn</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">cont</span><span class="o">.</span><span class="n">shuffle</span><span class="p">()</span>
+
+        <span class="n">pre_shuffled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="s1">&#39;pre_&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span>
+                                  <span class="n">shuffle_buffer_size</span><span class="p">,</span>
+                                  <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                                  <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">)</span>
+        <span class="n">shuffled</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="n">pre_shuffled</span><span class="p">,</span>
+                           <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                           <span class="n">size</span><span class="o">=</span><span class="n">pre_shuffled</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+                           <span class="n">trans_fn</span><span class="o">=</span><span class="n">cont_shuffle_fn</span><span class="p">,</span>
+                           <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                           <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                           <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                           <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                           <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span>
+        <span class="n">post_shuffled</span> <span class="o">=</span> <span class="n">shuffled</span><span class="o">.</span><span class="n">unbatch</span><span class="p">(</span><span class="s1">&#39;post_&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span>
+                                         <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                                         <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                                         <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                                         <span class="n">batch_sizes</span><span class="o">=</span><span class="n">shuffle_buffer_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">post_shuffled</span></div>
+
+<div class="viewcode-block" id="Dataset.prefetch"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.prefetch">[docs]</a>    <span class="k">def</span> <span class="nf">prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="c1"># noinspection PyUnresolvedReferences</span>
+        <span class="k">def</span> <span class="nf">base_slice_fn</span><span class="p">(</span><span class="n">slc_obj</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slc_obj</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
+                <span class="n">so_start</span> <span class="o">=</span> <span class="n">slc_obj</span>
+                <span class="n">so_stop</span> <span class="o">=</span> <span class="n">slc_obj</span> <span class="o">+</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">so_start</span> <span class="o">=</span> <span class="n">slc_obj</span><span class="o">.</span><span class="n">start</span>
+                <span class="n">so_stop</span> <span class="o">=</span> <span class="n">slc_obj</span><span class="o">.</span><span class="n">stop</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="n">so_start</span><span class="p">,</span> <span class="n">so_stop</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prefetching</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num_processes</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+                       <span class="n">base_slice_fn</span><span class="o">=</span><span class="n">base_slice_fn</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numpy_loading</span> <span class="k">if</span> <span class="n">numpy_loading</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">numpy_loading</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.to_dev"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.to_dev">[docs]</a>    <span class="k">def</span> <span class="nf">to_dev</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">cont_to_dev</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">cont</span><span class="o">.</span><span class="n">to_dev</span><span class="p">(</span><span class="n">dev_str</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+                       <span class="n">trans_fn</span><span class="o">=</span><span class="n">cont_to_dev</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.to_devs"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.to_devs">[docs]</a>    <span class="k">def</span> <span class="nf">to_devs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dev_strs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_processes</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">cont_to_devs</span><span class="p">(</span><span class="n">cont</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">cont</span><span class="o">.</span><span class="n">to_multi_dev</span><span class="p">(</span><span class="n">dev_strs</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">base_dataset</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                       <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">,</span>
+                       <span class="n">trans_fn</span><span class="o">=</span><span class="n">cont_to_devs</span><span class="p">,</span>
+                       <span class="n">with_caching</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_with_caching</span><span class="p">,</span>
+                       <span class="n">cache_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_cache_size</span><span class="p">,</span>
+                       <span class="n">num_processes</span><span class="o">=</span><span class="n">num_processes</span><span class="p">,</span>
+                       <span class="n">numpy_loading</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                       <span class="n">queue_timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_timeout</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dataset.cycle_for_debugging"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.cycle_for_debugging">[docs]</a>    <span class="k">def</span> <span class="nf">cycle_for_debugging</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_logs</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">about to cycle through all elements in dataset </span><span class="si">{}</span><span class="s1">!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">))</span>
+        <span class="n">log_freq</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="o">/</span><span class="n">num_logs</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">log_freq</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loading element </span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">))</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">i</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">))</span>
+            <span class="c1"># noinspection PyTypeChecker</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;loaded first element successfully:&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">finished cycling through all elements in dataset </span><span class="si">{}</span><span class="s1">!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Dataset.close"><a class="viewcode-back" href="../../dataset.html#ivy_builder.dataset.Dataset.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="p">,</span> <span class="n">ivy</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_base_dataset</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_workers</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_workers</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_slice_queues</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                    <span class="n">w</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice_queues</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">cancel_join_thread</span><span class="p">()</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_queues</span><span class="p">:</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">cancel_join_thread</span><span class="p">()</span>
+                    <span class="n">q</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_workers</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">w</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                        <span class="n">w</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_workers</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+    <span class="c1"># Getters #</span>
+    <span class="c1"># --------#</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Checkpoints &mdash; Ivy Builder 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Ivy Builder
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Abstract</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="abstract/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/network_group.html">Network group</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/trainer.html">Trainer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abstract/tuner.html">Tuner</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Data loaders</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data_loaders/seq_data_loader.html">Seq data loader</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Empty</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="empty/data_loader.html">Data loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="empty/network.html">Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="empty/trainer.html">Trainer</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Specs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="specs/data_loader_spec.html">Data loader spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/dataset_dirs.html">Dataset dirs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/dataset_spec.html">Dataset spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/network_spec.html">Network spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/spec.html">Spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/trainer_spec.html">Trainer spec</a></li>
+<li class="toctree-l1"><a class="reference internal" href="specs/tuner_spec.html">Tuner spec</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Ivy Builder</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Checkpoints</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/checkpoints.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-ivy_builder.checkpoints">
+<span id="checkpoints"></span><h1>Checkpoints<a class="headerlink" href="#module-ivy_builder.checkpoints" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="ivy_builder.checkpoints.Checkpoint">
+<em class="property">class </em><code class="sig-prename descclassname">ivy_builder.checkpoints.</code><code class="sig-name descname">Checkpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">optimizer</span></em>, <em class="sig-param"><span class="n">net</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#Checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.Checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.Checkpoint.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">optimizer</span></em>, <em class="sig-param"><span class="n">net</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#Checkpoint.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.Checkpoint.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.Checkpoint.net">
+<em class="property">property </em><code class="sig-name descname">net</code><a class="headerlink" href="#ivy_builder.checkpoints.Checkpoint.net" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.Checkpoint.optimizer">
+<em class="property">property </em><code class="sig-name descname">optimizer</code><a class="headerlink" href="#ivy_builder.checkpoints.Checkpoint.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.Checkpoint.restore">
+<code class="sig-name descname">restore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#Checkpoint.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.Checkpoint.restore" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ivy_builder.checkpoints.CheckpointManager">
+<em class="property">class </em><code class="sig-prename descclassname">ivy_builder.checkpoints.</code><code class="sig-name descname">CheckpointManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">max_to_keep</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">step_counter</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#CheckpointManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.CheckpointManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.CheckpointManager.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">checkpoint</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">max_to_keep</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">step_counter</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#CheckpointManager.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.CheckpointManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.CheckpointManager.latest_checkpoint_fpath">
+<em class="property">property </em><code class="sig-name descname">latest_checkpoint_fpath</code><a class="headerlink" href="#ivy_builder.checkpoints.CheckpointManager.latest_checkpoint_fpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ivy_builder.checkpoints.CheckpointManager.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">step</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ivy_builder/checkpoints.html#CheckpointManager.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ivy_builder.checkpoints.CheckpointManager.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ivy Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

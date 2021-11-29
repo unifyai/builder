@@ -1,0 +1,16 @@
+Network group
+=============
+
+.. automodule:: ivy_builder.abstract.network_group
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
+
+
+.. toctree::
+   :maxdepth: -1
+   :caption: Network group
+
+   network_group/NetworkGroup.rst
+
