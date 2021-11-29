@@ -118,19 +118,12 @@ Documentation Tree
    :maxdepth: -1
    :caption: Docs
 
-   docs/ivy
-.rst
-   docs/ivy_mech
-.rst
-   docs/ivy_vision
-.rst
-   docs/ivy_robot
-.rst
-   docs/ivy_gym
-.rst
-   docs/ivy_memory
-.rst
-   docs/ivy_builder
-.rst
+   docs/ivy.rst
+   docs/ivy_mech.rst
+   docs/ivy_vision.rst
+   docs/ivy_robot.rst
+   docs/ivy_gym.rst
+   docs/ivy_memory.rst
+   docs/ivy_builder.rst
    docs/ivy_models.rst
 
