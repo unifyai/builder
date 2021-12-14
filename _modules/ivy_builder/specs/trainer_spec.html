@@ -223,7 +223,7 @@
                  <span class="n">steps_to_profile</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
                  <span class="n">compile_graph</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span>
                  <span class="n">dev_strs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">dev_map_fn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;_raw_execute_with_grads&#39;</span><span class="p">,</span>
+                 <span class="n">dev_map_fn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;_split_execute_with_grads&#39;</span><span class="p">,</span>
                  <span class="n">tune_device_allocation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                  <span class="n">tune_splitting</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
