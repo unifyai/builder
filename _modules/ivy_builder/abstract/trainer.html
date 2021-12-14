@@ -297,6 +297,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span> <span class="o">=</span> <span class="kc">None</span>
 
+        <span class="c1"># cost function with splitting along the batch</span>
+        <span class="k">if</span> <span class="n">ivy</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost_raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">network</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">split_func_call</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost_raw</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">),</span> <span class="p">[</span><span class="n">batch</span><span class="p">],</span> <span class="s1">&#39;mean&#39;</span><span class="p">)</span>
+
         <span class="c1"># compilation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="o">=</span> <span class="kc">False</span></div>
