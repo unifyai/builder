@@ -297,10 +297,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dev_manager</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># cost function with splitting along the batch</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost_with_splitting</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">network</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">:</span> <span class="n">ivy</span><span class="o">.</span><span class="n">split_func_call</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">),</span> <span class="p">[</span><span class="n">batch</span><span class="p">],</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">stop_gradients</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
         <span class="c1"># compilation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compile_network_once_tuned</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_compile_optimizer_once_tuned</span> <span class="o">=</span> <span class="kc">False</span></div>
@@ -315,6 +311,11 @@
         <span class="n">state</span><span class="p">[</span><span class="s1">&#39;_spec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">state</span><span class="p">[</span><span class="s1">&#39;spec&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">state</span>
+
+    <span class="k">def</span> <span class="nf">_compute_cost_with_splitting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_grads</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">ivy</span><span class="o">.</span><span class="n">GradientTracking</span><span class="p">(</span><span class="n">with_grads</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ivy</span><span class="o">.</span><span class="n">split_func_call</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_cost</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">dev_str</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">v</span><span class="p">),</span> <span class="p">[</span><span class="n">batch</span><span class="p">],</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">stop_gradients</span><span class="o">=</span><span class="ow">not</span> <span class="n">with_grads</span><span class="p">)</span>
 
     <span class="c1"># Abstract #</span>
     <span class="c1"># ---------#</span>
