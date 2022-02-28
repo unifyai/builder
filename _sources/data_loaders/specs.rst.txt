@@ -1,0 +1,8 @@
+Specs
+=====
+
+.. automodule:: ivy_builder.data_loaders.specs
+    :members:
+    :special-members: __init__
+    :undoc-members:
+    :show-inheritance:
