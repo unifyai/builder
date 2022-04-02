@@ -9,6 +9,7 @@ Dataset dirs
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Dataset dirs
 

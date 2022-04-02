@@ -9,6 +9,7 @@ Network spec
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Network spec
 

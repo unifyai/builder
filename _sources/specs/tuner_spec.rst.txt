@@ -9,6 +9,7 @@ Tuner spec
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Tuner spec
 

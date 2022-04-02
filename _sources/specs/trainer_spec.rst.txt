@@ -9,6 +9,7 @@ Trainer spec
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Trainer spec
 

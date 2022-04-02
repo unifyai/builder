@@ -9,6 +9,7 @@ Checkpoints
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Checkpoints
 

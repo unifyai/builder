@@ -9,6 +9,7 @@ Seq data loader
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Seq data loader
 

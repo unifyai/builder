@@ -9,6 +9,7 @@ Dataset spec
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Dataset spec
 

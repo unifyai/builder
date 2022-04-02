@@ -9,6 +9,7 @@ Network group
 
 
 .. toctree::
+   :hidden:
    :maxdepth: -1
    :caption: Network group
 
